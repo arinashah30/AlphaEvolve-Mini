@@ -218,3 +218,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# alphaevolve-mini
+runs/smoke-*/
+runs/.eval_tmp/
+runs/_live_checks/
+data/smoke/
+.venv.nosync/

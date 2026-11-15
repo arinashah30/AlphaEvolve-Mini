@@ -1,0 +1,145 @@
+{
+  "replicate": 2,
+  "condition": "independent",
+  "slot": 3,
+  "global_index": 86,
+  "completed_at": "2026-11-15T01:08:24+00:00",
+  "synthetic": false,
+  "parent_candidate_id": "4d1accf86e47",
+  "prompt": "You are improving a heuristic for online two-dimensional bin packing (a simplified machine-placement problem).\n\nTask rules (enforced by a trusted evaluator you cannot change):\n- Every machine has CPU capacity 1000 and memory capacity 1000 (integer units).\n- Jobs arrive one at a time in a fixed order and never leave. Each job has integer job_cpu and job_mem demands.\n- For each job, the evaluator calls your function once for every EXISTING machine that can fit the job, passing that machine's current free_cpu and free_mem (before placement).\n- The job goes to the machine with the highest score; ties go to the earliest-created machine.\n- If no existing machine fits, a new machine is opened without calling your function.\n\nObjective: minimize the mean number of machines used across the development workloads (lower is better).\nWorkload families: balanced (similar CPU and memory demand), cpu_heavy, mem_heavy, and mixed (each job drawn from one of the other three families).\n\nProgram constraints (programs that violate them are rejected and still count as an attempt):\n- Define exactly one function: def score(job_cpu, job_mem, free_cpu, free_mem):\n- Return a finite int or float (not a bool).\n- Allowed: arithmetic (+ - * / // % **), comparisons, and/or/not, if statements, conditional expressions, simple local variable assignments, return statements, and calls to abs, min and max.\n- Exponents must be numeric literals with magnitude at most 4. Numeric literals must have magnitude at most 1e+06.\n- Not allowed: imports, attribute access, indexing, loops, comprehensions, nested functions, lambdas, global/nonlocal, decorators, strings other than a docstring, or calls to anything except abs/min/max.\n- Keep the source under 2000 characters.\n\n### CURRENT PROGRAM BEGIN\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Best fit: prefer the machine with the least total residual capacity after placement.\"\"\"\n    return -((free_cpu - job_cpu) + (free_mem - job_mem)) / 1000\n```\n### CURRENT PROGRAM END\n\nEvaluation feedback for the current program:\nStatus: valid.\nMean machines used (all development instances): 64.417\nMean machines used per family:\n  balanced: 33.000\n  cpu_heavy: 89.333\n  mem_heavy: 90.333\n  mixed: 45.000\n\nPropose one improved version of the score function that you expect to use fewer machines.\nFirst, write a short analysis (up to about 250 words): using the feedback above, explain why the current program wastes machines, especially on the families with the most machines, and what placement behaviour would reduce that.\nThen give exactly one ```python code block containing the complete improved function.\n",
+  "response": {
+    "ok": true,
+    "fatal": false,
+    "text": "### Analysis\n\nThe current baseline implements a simple sum-based Best Fit heuristic: $-\\big((r_{\\text{cpu}}) + (r_{\\text{mem}})\\big)$.\nWhile this performs reasonably on balanced workloads (33 machines), it performs terribly on skewed workloads (`cpu_heavy` at 89.33 and `mem_heavy` at 90.33) and mixed workloads.\n\nThe primary failure mode is **bottleneck mismatch and dimensional imbalance**:\n1. In `cpu_heavy` and `mem_heavy` workloads, one dimension is the tight bottleneck while the other dimension has abundant slack. Linear sum residual treats 1 unit of residual CPU identically to 1 unit of residual memory. Consequently, a machine with $(r_{\\text{cpu}}=0, r_{\\text{mem}}=900)$ receives the exact same score as one with $(r_{\\text{cpu}}=450, r_{\\text{mem}}=450)$. The latter could have accommodated further CPU-heavy jobs, whereas the former's CPU is completely exhausted.\n2. In `mixed` workloads, placing complementary jobs together (e.g. packing a memory-heavy job into a machine whose CPU is mostly used, or pairing jobs with complementary slopes) drastically increases overall packing efficiency and prevents stranded capacity.\n\nTo solve this, we should:\n- Prefer machines that minimize the maximum residual dimension (or L2 norm / sum of squares of residuals), keeping the residual capacity balanced and compact.\n- Heavily reward alignment between the job's demand vector and the machine's remaining capacity vector (e.g. via cosine similarity or dot product normalized by capacities), prioritizing placing jobs where their primary requirement consumes the dominant free resource.\n- Penalize the difference $|r_{\\text{cpu}} - r_{\\text{mem}}|$ to prevent stranding a single resource.\n\n### Improved Heuristic\n\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Multi-dimensional best fit with alignment and balance penalties.\n    Minimizes residual capacity, penalizes bottleneck dimension waste,\n    and rewards matching the job's resource profile to the machine's free profile.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Normalized residuals in [0, 1]\n    rc = rem_cpu / 1000.0\n    rm = rem_mem / 1000.0\n\n    # L2 norm penalty to prefer packing tightly on both dimensions\n    # and heavily penalize leaving a large bottleneck dimension\n    l2_residual = rc * rc + rm * rm\n\n    # Balance penalty: penalize skew between remaining resources\n    imbalance = abs(rc - rm)\n\n    # Alignment reward: job consumes the resource that is more abundant\n    # Normalized job demands and free capacities\n    jc = job_cpu / 1000.0\n    jm = job_mem / 1000.0\n    fc = free_cpu / 1000.0\n    fm = free_mem / 1000.0\n\n    # Dot product alignment (higher when job matches available profile)\n    alignment = (jc * fc + jm * fm)\n\n    # Combine: minimize residuals and imbalance, maximize alignment\n    return alignment * 2.0 - l2_residual * 3.0 - imbalance * 1.5 - (rc + rm)\n```",
+    "attempts": [
+      {
+        "attempt": 1,
+        "status": "ok",
+        "started_at": 1794704896.74668,
+        "latency_s": 7.744770583231002,
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "usage": {
+          "prompt_token_count": 658,
+          "candidates_token_count": 756,
+          "thoughts_token_count": null,
+          "cached_content_token_count": null,
+          "tool_use_prompt_token_count": null,
+          "total_token_count": 1414
+        }
+      }
+    ],
+    "finish_reason": "FinishReason.STOP",
+    "model_version": "gemini-3.8-flash",
+    "response_id": "AAb5arXQNMbi_uMPsKH2wQc",
+    "synthetic": false,
+    "non_text_parts": null
+  },
+  "request_status": "ok",
+  "candidate": {
+    "raw_response": "### Analysis\n\nThe current baseline implements a simple sum-based Best Fit heuristic: $-\\big((r_{\\text{cpu}}) + (r_{\\text{mem}})\\big)$.\nWhile this performs reasonably on balanced workloads (33 machines), it performs terribly on skewed workloads (`cpu_heavy` at 89.33 and `mem_heavy` at 90.33) and mixed workloads.\n\nThe primary failure mode is **bottleneck mismatch and dimensional imbalance**:\n1. In `cpu_heavy` and `mem_heavy` workloads, one dimension is the tight bottleneck while the other dimension has abundant slack. Linear sum residual treats 1 unit of residual CPU identically to 1 unit of residual memory. Consequently, a machine with $(r_{\\text{cpu}}=0, r_{\\text{mem}}=900)$ receives the exact same score as one with $(r_{\\text{cpu}}=450, r_{\\text{mem}}=450)$. The latter could have accommodated further CPU-heavy jobs, whereas the former's CPU is completely exhausted.\n2. In `mixed` workloads, placing complementary jobs together (e.g. packing a memory-heavy job into a machine whose CPU is mostly used, or pairing jobs with complementary slopes) drastically increases overall packing efficiency and prevents stranded capacity.\n\nTo solve this, we should:\n- Prefer machines that minimize the maximum residual dimension (or L2 norm / sum of squares of residuals), keeping the residual capacity balanced and compact.\n- Heavily reward alignment between the job's demand vector and the machine's remaining capacity vector (e.g. via cosine similarity or dot product normalized by capacities), prioritizing placing jobs where their primary requirement consumes the dominant free resource.\n- Penalize the difference $|r_{\\text{cpu}} - r_{\\text{mem}}|$ to prevent stranding a single resource.\n\n### Improved Heuristic\n\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Multi-dimensional best fit with alignment and balance penalties.\n    Minimizes residual capacity, penalizes bottleneck dimension waste,\n    and rewards matching the job's resource profile to the machine's free profile.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Normalized residuals in [0, 1]\n    rc = rem_cpu / 1000.0\n    rm = rem_mem / 1000.0\n\n    # L2 norm penalty to prefer packing tightly on both dimensions\n    # and heavily penalize leaving a large bottleneck dimension\n    l2_residual = rc * rc + rm * rm\n\n    # Balance penalty: penalize skew between remaining resources\n    imbalance = abs(rc - rm)\n\n    # Alignment reward: job consumes the resource that is more abundant\n    # Normalized job demands and free capacities\n    jc = job_cpu / 1000.0\n    jm = job_mem / 1000.0\n    fc = free_cpu / 1000.0\n    fm = free_mem / 1000.0\n\n    # Dot product alignment (higher when job matches available profile)\n    alignment = (jc * fc + jm * fm)\n\n    # Combine: minimize residuals and imbalance, maximize alignment\n    return alignment * 2.0 - l2_residual * 3.0 - imbalance * 1.5 - (rc + rm)\n```",
+    "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Multi-dimensional best fit with alignment and balance penalties.\n    Minimizes residual capacity, penalizes bottleneck dimension waste,\n    and rewards matching the job's resource profile to the machine's free profile.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Normalized residuals in [0, 1]\n    rc = rem_cpu / 1000.0\n    rm = rem_mem / 1000.0\n\n    # L2 norm penalty to prefer packing tightly on both dimensions\n    # and heavily penalize leaving a large bottleneck dimension\n    l2_residual = rc * rc + rm * rm\n\n    # Balance penalty: penalize skew between remaining resources\n    imbalance = abs(rc - rm)\n\n    # Alignment reward: job consumes the resource that is more abundant\n    # Normalized job demands and free capacities\n    jc = job_cpu / 1000.0\n    jm = job_mem / 1000.0\n    fc = free_cpu / 1000.0\n    fm = free_mem / 1000.0\n\n    # Dot product alignment (higher when job matches available profile)\n    alignment = (jc * fc + jm * fm)\n\n    # Combine: minimize residuals and imbalance, maximize alignment\n    return alignment * 2.0 - l2_residual * 3.0 - imbalance * 1.5 - (rc + rm)\n",
+    "extraction_error": null
+  },
+  "eval": {
+    "per_instance": {
+      "dev-balanced-000": {
+        "machines_used": 32,
+        "residual_cpu": 3019,
+        "residual_mem": 3014,
+        "lower_bound": 29
+      },
+      "dev-balanced-001": {
+        "machines_used": 34,
+        "residual_cpu": 3289,
+        "residual_mem": 3475,
+        "lower_bound": 31
+      },
+      "dev-balanced-002": {
+        "machines_used": 34,
+        "residual_cpu": 3259,
+        "residual_mem": 3308,
+        "lower_bound": 31
+      },
+      "dev-cpu_heavy-000": {
+        "machines_used": 94,
+        "residual_cpu": 26630,
+        "residual_mem": 78631,
+        "lower_bound": 68
+      },
+      "dev-cpu_heavy-001": {
+        "machines_used": 84,
+        "residual_cpu": 22931,
+        "residual_mem": 68420,
+        "lower_bound": 62
+      },
+      "dev-cpu_heavy-002": {
+        "machines_used": 91,
+        "residual_cpu": 25780,
+        "residual_mem": 76416,
+        "lower_bound": 66
+      },
+      "dev-mem_heavy-000": {
+        "machines_used": 93,
+        "residual_cpu": 77156,
+        "residual_mem": 26371,
+        "lower_bound": 67
+      },
+      "dev-mem_heavy-001": {
+        "machines_used": 89,
+        "residual_cpu": 73824,
+        "residual_mem": 23750,
+        "lower_bound": 66
+      },
+      "dev-mem_heavy-002": {
+        "machines_used": 89,
+        "residual_cpu": 74244,
+        "residual_mem": 24386,
+        "lower_bound": 65
+      },
+      "dev-mixed-000": {
+        "machines_used": 45,
+        "residual_cpu": 5000,
+        "residual_mem": 10884,
+        "lower_bound": 40
+      },
+      "dev-mixed-001": {
+        "machines_used": 42,
+        "residual_cpu": 9540,
+        "residual_mem": 6060,
+        "lower_bound": 36
+      },
+      "dev-mixed-002": {
+        "machines_used": 48,
+        "residual_cpu": 12641,
+        "residual_mem": 7312,
+        "lower_bound": 41
+      }
+    },
+    "total_machines": 775,
+    "mean_machines": 64.58333333333333,
+    "family_means": {
+      "balanced": 33.333333333333336,
+      "cpu_heavy": 89.66666666666667,
+      "mem_heavy": 90.33333333333333,
+      "mixed": 45.0
+    },
+    "valid": true,
+    "candidate_id": "4c196616cf31",
+    "normalized_source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Multi-dimensional best fit with alignment and balance penalties.\n    Minimizes residual capacity, penalizes bottleneck dimension waste,\n    and rewards matching the job's resource profile to the machine's free profile.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n    rc = rem_cpu / 1000.0\n    rm = rem_mem / 1000.0\n    l2_residual = rc * rc + rm * rm\n    imbalance = abs(rc - rm)\n    jc = job_cpu / 1000.0\n    jm = job_mem / 1000.0\n    fc = free_cpu / 1000.0\n    fm = free_mem / 1000.0\n    alignment = jc * fc + jm * fm\n    return alignment * 2.0 - l2_residual * 3.0 - imbalance * 1.5 - (rc + rm)\n",
+    "eval_seconds": 0.353,
+    "runner": "container"
+  },
+  "improved": false,
+  "incumbent_before": {
+    "candidate_id": "9af30fc8cb62",
+    "total_machines": 772
+  },
+  "incumbent_after": {
+    "candidate_id": "9af30fc8cb62",
+    "total_machines": 772,
+    "mean_machines": 64.33333333333333,
+    "from_slot": 0
+  }
+}

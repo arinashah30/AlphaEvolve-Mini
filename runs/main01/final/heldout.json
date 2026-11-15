@@ -1,0 +1,2214 @@
+{
+  "run_id": "main01",
+  "evaluated_at": "2026-11-15T01:12:45+00:00",
+  "partial": false,
+  "live": true,
+  "runner": "container",
+  "test_split_hash": "9b5239474876b82da0235ae4e3d96e62e63b4442e92911f37acdc60137453e65",
+  "instances": [
+    {
+      "instance_id": "test-balanced-000",
+      "family": "balanced"
+    },
+    {
+      "instance_id": "test-balanced-001",
+      "family": "balanced"
+    },
+    {
+      "instance_id": "test-balanced-002",
+      "family": "balanced"
+    },
+    {
+      "instance_id": "test-balanced-003",
+      "family": "balanced"
+    },
+    {
+      "instance_id": "test-balanced-004",
+      "family": "balanced"
+    },
+    {
+      "instance_id": "test-balanced-005",
+      "family": "balanced"
+    },
+    {
+      "instance_id": "test-balanced-006",
+      "family": "balanced"
+    },
+    {
+      "instance_id": "test-balanced-007",
+      "family": "balanced"
+    },
+    {
+      "instance_id": "test-balanced-008",
+      "family": "balanced"
+    },
+    {
+      "instance_id": "test-balanced-009",
+      "family": "balanced"
+    },
+    {
+      "instance_id": "test-cpu_heavy-000",
+      "family": "cpu_heavy"
+    },
+    {
+      "instance_id": "test-cpu_heavy-001",
+      "family": "cpu_heavy"
+    },
+    {
+      "instance_id": "test-cpu_heavy-002",
+      "family": "cpu_heavy"
+    },
+    {
+      "instance_id": "test-cpu_heavy-003",
+      "family": "cpu_heavy"
+    },
+    {
+      "instance_id": "test-cpu_heavy-004",
+      "family": "cpu_heavy"
+    },
+    {
+      "instance_id": "test-cpu_heavy-005",
+      "family": "cpu_heavy"
+    },
+    {
+      "instance_id": "test-cpu_heavy-006",
+      "family": "cpu_heavy"
+    },
+    {
+      "instance_id": "test-cpu_heavy-007",
+      "family": "cpu_heavy"
+    },
+    {
+      "instance_id": "test-cpu_heavy-008",
+      "family": "cpu_heavy"
+    },
+    {
+      "instance_id": "test-cpu_heavy-009",
+      "family": "cpu_heavy"
+    },
+    {
+      "instance_id": "test-mem_heavy-000",
+      "family": "mem_heavy"
+    },
+    {
+      "instance_id": "test-mem_heavy-001",
+      "family": "mem_heavy"
+    },
+    {
+      "instance_id": "test-mem_heavy-002",
+      "family": "mem_heavy"
+    },
+    {
+      "instance_id": "test-mem_heavy-003",
+      "family": "mem_heavy"
+    },
+    {
+      "instance_id": "test-mem_heavy-004",
+      "family": "mem_heavy"
+    },
+    {
+      "instance_id": "test-mem_heavy-005",
+      "family": "mem_heavy"
+    },
+    {
+      "instance_id": "test-mem_heavy-006",
+      "family": "mem_heavy"
+    },
+    {
+      "instance_id": "test-mem_heavy-007",
+      "family": "mem_heavy"
+    },
+    {
+      "instance_id": "test-mem_heavy-008",
+      "family": "mem_heavy"
+    },
+    {
+      "instance_id": "test-mem_heavy-009",
+      "family": "mem_heavy"
+    },
+    {
+      "instance_id": "test-mixed-000",
+      "family": "mixed"
+    },
+    {
+      "instance_id": "test-mixed-001",
+      "family": "mixed"
+    },
+    {
+      "instance_id": "test-mixed-002",
+      "family": "mixed"
+    },
+    {
+      "instance_id": "test-mixed-003",
+      "family": "mixed"
+    },
+    {
+      "instance_id": "test-mixed-004",
+      "family": "mixed"
+    },
+    {
+      "instance_id": "test-mixed-005",
+      "family": "mixed"
+    },
+    {
+      "instance_id": "test-mixed-006",
+      "family": "mixed"
+    },
+    {
+      "instance_id": "test-mixed-007",
+      "family": "mixed"
+    },
+    {
+      "instance_id": "test-mixed-008",
+      "family": "mixed"
+    },
+    {
+      "instance_id": "test-mixed-009",
+      "family": "mixed"
+    }
+  ],
+  "policies": {
+    "first_fit": {
+      "per_instance": {
+        "test-balanced-000": {
+          "machines_used": 34,
+          "residual_cpu": 1913,
+          "residual_mem": 2724,
+          "lower_bound": 33
+        },
+        "test-balanced-001": {
+          "machines_used": 33,
+          "residual_cpu": 2822,
+          "residual_mem": 3429,
+          "lower_bound": 31
+        },
+        "test-balanced-002": {
+          "machines_used": 35,
+          "residual_cpu": 3714,
+          "residual_mem": 3920,
+          "lower_bound": 32
+        },
+        "test-balanced-003": {
+          "machines_used": 33,
+          "residual_cpu": 2695,
+          "residual_mem": 3022,
+          "lower_bound": 31
+        },
+        "test-balanced-004": {
+          "machines_used": 35,
+          "residual_cpu": 3333,
+          "residual_mem": 3372,
+          "lower_bound": 32
+        },
+        "test-balanced-005": {
+          "machines_used": 33,
+          "residual_cpu": 2772,
+          "residual_mem": 2076,
+          "lower_bound": 31
+        },
+        "test-balanced-006": {
+          "machines_used": 33,
+          "residual_cpu": 2744,
+          "residual_mem": 2876,
+          "lower_bound": 31
+        },
+        "test-balanced-007": {
+          "machines_used": 33,
+          "residual_cpu": 3469,
+          "residual_mem": 2955,
+          "lower_bound": 31
+        },
+        "test-balanced-008": {
+          "machines_used": 31,
+          "residual_cpu": 3219,
+          "residual_mem": 2291,
+          "lower_bound": 29
+        },
+        "test-balanced-009": {
+          "machines_used": 32,
+          "residual_cpu": 2220,
+          "residual_mem": 2664,
+          "lower_bound": 30
+        },
+        "test-cpu_heavy-000": {
+          "machines_used": 91,
+          "residual_cpu": 23853,
+          "residual_mem": 75452,
+          "lower_bound": 68
+        },
+        "test-cpu_heavy-001": {
+          "machines_used": 93,
+          "residual_cpu": 28886,
+          "residual_mem": 78008,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-002": {
+          "machines_used": 86,
+          "residual_cpu": 22196,
+          "residual_mem": 71150,
+          "lower_bound": 64
+        },
+        "test-cpu_heavy-003": {
+          "machines_used": 88,
+          "residual_cpu": 23278,
+          "residual_mem": 72535,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-004": {
+          "machines_used": 90,
+          "residual_cpu": 25570,
+          "residual_mem": 75643,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-005": {
+          "machines_used": 90,
+          "residual_cpu": 24581,
+          "residual_mem": 75569,
+          "lower_bound": 66
+        },
+        "test-cpu_heavy-006": {
+          "machines_used": 91,
+          "residual_cpu": 24703,
+          "residual_mem": 74977,
+          "lower_bound": 67
+        },
+        "test-cpu_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 24797,
+          "residual_mem": 74116,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-008": {
+          "machines_used": 94,
+          "residual_cpu": 29022,
+          "residual_mem": 79027,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-009": {
+          "machines_used": 91,
+          "residual_cpu": 27031,
+          "residual_mem": 76649,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-000": {
+          "machines_used": 86,
+          "residual_cpu": 70393,
+          "residual_mem": 23038,
+          "lower_bound": 63
+        },
+        "test-mem_heavy-001": {
+          "machines_used": 90,
+          "residual_cpu": 75479,
+          "residual_mem": 26837,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-002": {
+          "machines_used": 90,
+          "residual_cpu": 75069,
+          "residual_mem": 24435,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-003": {
+          "machines_used": 91,
+          "residual_cpu": 75301,
+          "residual_mem": 25018,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-004": {
+          "machines_used": 91,
+          "residual_cpu": 75535,
+          "residual_mem": 27267,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-005": {
+          "machines_used": 94,
+          "residual_cpu": 78564,
+          "residual_mem": 28902,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-006": {
+          "machines_used": 92,
+          "residual_cpu": 77700,
+          "residual_mem": 26605,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 74047,
+          "residual_mem": 24782,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-008": {
+          "machines_used": 90,
+          "residual_cpu": 75729,
+          "residual_mem": 25096,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-009": {
+          "machines_used": 92,
+          "residual_cpu": 76354,
+          "residual_mem": 25052,
+          "lower_bound": 67
+        },
+        "test-mixed-000": {
+          "machines_used": 49,
+          "residual_cpu": 12663,
+          "residual_mem": 10304,
+          "lower_bound": 39
+        },
+        "test-mixed-001": {
+          "machines_used": 48,
+          "residual_cpu": 8661,
+          "residual_mem": 12871,
+          "lower_bound": 40
+        },
+        "test-mixed-002": {
+          "machines_used": 47,
+          "residual_cpu": 7863,
+          "residual_mem": 12191,
+          "lower_bound": 40
+        },
+        "test-mixed-003": {
+          "machines_used": 46,
+          "residual_cpu": 11313,
+          "residual_mem": 6552,
+          "lower_bound": 40
+        },
+        "test-mixed-004": {
+          "machines_used": 46,
+          "residual_cpu": 13546,
+          "residual_mem": 7886,
+          "lower_bound": 39
+        },
+        "test-mixed-005": {
+          "machines_used": 48,
+          "residual_cpu": 7470,
+          "residual_mem": 12880,
+          "lower_bound": 41
+        },
+        "test-mixed-006": {
+          "machines_used": 46,
+          "residual_cpu": 6987,
+          "residual_mem": 11194,
+          "lower_bound": 40
+        },
+        "test-mixed-007": {
+          "machines_used": 48,
+          "residual_cpu": 8138,
+          "residual_mem": 15160,
+          "lower_bound": 40
+        },
+        "test-mixed-008": {
+          "machines_used": 49,
+          "residual_cpu": 8171,
+          "residual_mem": 15851,
+          "lower_bound": 41
+        },
+        "test-mixed-009": {
+          "machines_used": 50,
+          "residual_cpu": 17278,
+          "residual_mem": 6375,
+          "lower_bound": 44
+        }
+      },
+      "total_machines": 2617,
+      "mean_machines": 65.425,
+      "family_means": {
+        "balanced": 33.2,
+        "cpu_heavy": 90.3,
+        "mem_heavy": 90.5,
+        "mixed": 47.7
+      },
+      "kind": "reference"
+    },
+    "best_fit": {
+      "per_instance": {
+        "test-balanced-000": {
+          "machines_used": 34,
+          "residual_cpu": 1913,
+          "residual_mem": 2724,
+          "lower_bound": 33
+        },
+        "test-balanced-001": {
+          "machines_used": 33,
+          "residual_cpu": 2822,
+          "residual_mem": 3429,
+          "lower_bound": 31
+        },
+        "test-balanced-002": {
+          "machines_used": 35,
+          "residual_cpu": 3714,
+          "residual_mem": 3920,
+          "lower_bound": 32
+        },
+        "test-balanced-003": {
+          "machines_used": 33,
+          "residual_cpu": 2695,
+          "residual_mem": 3022,
+          "lower_bound": 31
+        },
+        "test-balanced-004": {
+          "machines_used": 34,
+          "residual_cpu": 2333,
+          "residual_mem": 2372,
+          "lower_bound": 32
+        },
+        "test-balanced-005": {
+          "machines_used": 33,
+          "residual_cpu": 2772,
+          "residual_mem": 2076,
+          "lower_bound": 31
+        },
+        "test-balanced-006": {
+          "machines_used": 33,
+          "residual_cpu": 2744,
+          "residual_mem": 2876,
+          "lower_bound": 31
+        },
+        "test-balanced-007": {
+          "machines_used": 32,
+          "residual_cpu": 2469,
+          "residual_mem": 1955,
+          "lower_bound": 31
+        },
+        "test-balanced-008": {
+          "machines_used": 31,
+          "residual_cpu": 3219,
+          "residual_mem": 2291,
+          "lower_bound": 29
+        },
+        "test-balanced-009": {
+          "machines_used": 32,
+          "residual_cpu": 2220,
+          "residual_mem": 2664,
+          "lower_bound": 30
+        },
+        "test-cpu_heavy-000": {
+          "machines_used": 91,
+          "residual_cpu": 23853,
+          "residual_mem": 75452,
+          "lower_bound": 68
+        },
+        "test-cpu_heavy-001": {
+          "machines_used": 93,
+          "residual_cpu": 28886,
+          "residual_mem": 78008,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-002": {
+          "machines_used": 86,
+          "residual_cpu": 22196,
+          "residual_mem": 71150,
+          "lower_bound": 64
+        },
+        "test-cpu_heavy-003": {
+          "machines_used": 88,
+          "residual_cpu": 23278,
+          "residual_mem": 72535,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-004": {
+          "machines_used": 90,
+          "residual_cpu": 25570,
+          "residual_mem": 75643,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-005": {
+          "machines_used": 90,
+          "residual_cpu": 24581,
+          "residual_mem": 75569,
+          "lower_bound": 66
+        },
+        "test-cpu_heavy-006": {
+          "machines_used": 91,
+          "residual_cpu": 24703,
+          "residual_mem": 74977,
+          "lower_bound": 67
+        },
+        "test-cpu_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 24797,
+          "residual_mem": 74116,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-008": {
+          "machines_used": 94,
+          "residual_cpu": 29022,
+          "residual_mem": 79027,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-009": {
+          "machines_used": 91,
+          "residual_cpu": 27031,
+          "residual_mem": 76649,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-000": {
+          "machines_used": 87,
+          "residual_cpu": 71393,
+          "residual_mem": 24038,
+          "lower_bound": 63
+        },
+        "test-mem_heavy-001": {
+          "machines_used": 90,
+          "residual_cpu": 75479,
+          "residual_mem": 26837,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-002": {
+          "machines_used": 91,
+          "residual_cpu": 76069,
+          "residual_mem": 25435,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-003": {
+          "machines_used": 91,
+          "residual_cpu": 75301,
+          "residual_mem": 25018,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-004": {
+          "machines_used": 91,
+          "residual_cpu": 75535,
+          "residual_mem": 27267,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-005": {
+          "machines_used": 94,
+          "residual_cpu": 78564,
+          "residual_mem": 28902,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-006": {
+          "machines_used": 92,
+          "residual_cpu": 77700,
+          "residual_mem": 26605,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 74047,
+          "residual_mem": 24782,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-008": {
+          "machines_used": 91,
+          "residual_cpu": 76729,
+          "residual_mem": 26096,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-009": {
+          "machines_used": 92,
+          "residual_cpu": 76354,
+          "residual_mem": 25052,
+          "lower_bound": 67
+        },
+        "test-mixed-000": {
+          "machines_used": 49,
+          "residual_cpu": 12663,
+          "residual_mem": 10304,
+          "lower_bound": 39
+        },
+        "test-mixed-001": {
+          "machines_used": 51,
+          "residual_cpu": 11661,
+          "residual_mem": 15871,
+          "lower_bound": 40
+        },
+        "test-mixed-002": {
+          "machines_used": 46,
+          "residual_cpu": 6863,
+          "residual_mem": 11191,
+          "lower_bound": 40
+        },
+        "test-mixed-003": {
+          "machines_used": 46,
+          "residual_cpu": 11313,
+          "residual_mem": 6552,
+          "lower_bound": 40
+        },
+        "test-mixed-004": {
+          "machines_used": 46,
+          "residual_cpu": 13546,
+          "residual_mem": 7886,
+          "lower_bound": 39
+        },
+        "test-mixed-005": {
+          "machines_used": 48,
+          "residual_cpu": 7470,
+          "residual_mem": 12880,
+          "lower_bound": 41
+        },
+        "test-mixed-006": {
+          "machines_used": 45,
+          "residual_cpu": 5987,
+          "residual_mem": 10194,
+          "lower_bound": 40
+        },
+        "test-mixed-007": {
+          "machines_used": 48,
+          "residual_cpu": 8138,
+          "residual_mem": 15160,
+          "lower_bound": 40
+        },
+        "test-mixed-008": {
+          "machines_used": 47,
+          "residual_cpu": 6171,
+          "residual_mem": 13851,
+          "lower_bound": 41
+        },
+        "test-mixed-009": {
+          "machines_used": 51,
+          "residual_cpu": 18278,
+          "residual_mem": 7375,
+          "lower_bound": 44
+        }
+      },
+      "total_machines": 2618,
+      "mean_machines": 65.45,
+      "family_means": {
+        "balanced": 33.0,
+        "cpu_heavy": 90.3,
+        "mem_heavy": 90.8,
+        "mixed": 47.7
+      },
+      "kind": "reference"
+    },
+    "winner:0:independent": {
+      "per_instance": {
+        "test-balanced-000": {
+          "machines_used": 34,
+          "residual_cpu": 1913,
+          "residual_mem": 2724,
+          "lower_bound": 33
+        },
+        "test-balanced-001": {
+          "machines_used": 33,
+          "residual_cpu": 2822,
+          "residual_mem": 3429,
+          "lower_bound": 31
+        },
+        "test-balanced-002": {
+          "machines_used": 35,
+          "residual_cpu": 3714,
+          "residual_mem": 3920,
+          "lower_bound": 32
+        },
+        "test-balanced-003": {
+          "machines_used": 33,
+          "residual_cpu": 2695,
+          "residual_mem": 3022,
+          "lower_bound": 31
+        },
+        "test-balanced-004": {
+          "machines_used": 34,
+          "residual_cpu": 2333,
+          "residual_mem": 2372,
+          "lower_bound": 32
+        },
+        "test-balanced-005": {
+          "machines_used": 33,
+          "residual_cpu": 2772,
+          "residual_mem": 2076,
+          "lower_bound": 31
+        },
+        "test-balanced-006": {
+          "machines_used": 33,
+          "residual_cpu": 2744,
+          "residual_mem": 2876,
+          "lower_bound": 31
+        },
+        "test-balanced-007": {
+          "machines_used": 32,
+          "residual_cpu": 2469,
+          "residual_mem": 1955,
+          "lower_bound": 31
+        },
+        "test-balanced-008": {
+          "machines_used": 31,
+          "residual_cpu": 3219,
+          "residual_mem": 2291,
+          "lower_bound": 29
+        },
+        "test-balanced-009": {
+          "machines_used": 32,
+          "residual_cpu": 2220,
+          "residual_mem": 2664,
+          "lower_bound": 30
+        },
+        "test-cpu_heavy-000": {
+          "machines_used": 91,
+          "residual_cpu": 23853,
+          "residual_mem": 75452,
+          "lower_bound": 68
+        },
+        "test-cpu_heavy-001": {
+          "machines_used": 93,
+          "residual_cpu": 28886,
+          "residual_mem": 78008,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-002": {
+          "machines_used": 86,
+          "residual_cpu": 22196,
+          "residual_mem": 71150,
+          "lower_bound": 64
+        },
+        "test-cpu_heavy-003": {
+          "machines_used": 88,
+          "residual_cpu": 23278,
+          "residual_mem": 72535,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-004": {
+          "machines_used": 90,
+          "residual_cpu": 25570,
+          "residual_mem": 75643,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-005": {
+          "machines_used": 90,
+          "residual_cpu": 24581,
+          "residual_mem": 75569,
+          "lower_bound": 66
+        },
+        "test-cpu_heavy-006": {
+          "machines_used": 91,
+          "residual_cpu": 24703,
+          "residual_mem": 74977,
+          "lower_bound": 67
+        },
+        "test-cpu_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 24797,
+          "residual_mem": 74116,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-008": {
+          "machines_used": 94,
+          "residual_cpu": 29022,
+          "residual_mem": 79027,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-009": {
+          "machines_used": 91,
+          "residual_cpu": 27031,
+          "residual_mem": 76649,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-000": {
+          "machines_used": 87,
+          "residual_cpu": 71393,
+          "residual_mem": 24038,
+          "lower_bound": 63
+        },
+        "test-mem_heavy-001": {
+          "machines_used": 90,
+          "residual_cpu": 75479,
+          "residual_mem": 26837,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-002": {
+          "machines_used": 91,
+          "residual_cpu": 76069,
+          "residual_mem": 25435,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-003": {
+          "machines_used": 91,
+          "residual_cpu": 75301,
+          "residual_mem": 25018,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-004": {
+          "machines_used": 91,
+          "residual_cpu": 75535,
+          "residual_mem": 27267,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-005": {
+          "machines_used": 94,
+          "residual_cpu": 78564,
+          "residual_mem": 28902,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-006": {
+          "machines_used": 92,
+          "residual_cpu": 77700,
+          "residual_mem": 26605,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 74047,
+          "residual_mem": 24782,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-008": {
+          "machines_used": 91,
+          "residual_cpu": 76729,
+          "residual_mem": 26096,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-009": {
+          "machines_used": 92,
+          "residual_cpu": 76354,
+          "residual_mem": 25052,
+          "lower_bound": 67
+        },
+        "test-mixed-000": {
+          "machines_used": 49,
+          "residual_cpu": 12663,
+          "residual_mem": 10304,
+          "lower_bound": 39
+        },
+        "test-mixed-001": {
+          "machines_used": 51,
+          "residual_cpu": 11661,
+          "residual_mem": 15871,
+          "lower_bound": 40
+        },
+        "test-mixed-002": {
+          "machines_used": 46,
+          "residual_cpu": 6863,
+          "residual_mem": 11191,
+          "lower_bound": 40
+        },
+        "test-mixed-003": {
+          "machines_used": 46,
+          "residual_cpu": 11313,
+          "residual_mem": 6552,
+          "lower_bound": 40
+        },
+        "test-mixed-004": {
+          "machines_used": 46,
+          "residual_cpu": 13546,
+          "residual_mem": 7886,
+          "lower_bound": 39
+        },
+        "test-mixed-005": {
+          "machines_used": 48,
+          "residual_cpu": 7470,
+          "residual_mem": 12880,
+          "lower_bound": 41
+        },
+        "test-mixed-006": {
+          "machines_used": 45,
+          "residual_cpu": 5987,
+          "residual_mem": 10194,
+          "lower_bound": 40
+        },
+        "test-mixed-007": {
+          "machines_used": 48,
+          "residual_cpu": 8138,
+          "residual_mem": 15160,
+          "lower_bound": 40
+        },
+        "test-mixed-008": {
+          "machines_used": 47,
+          "residual_cpu": 6171,
+          "residual_mem": 13851,
+          "lower_bound": 41
+        },
+        "test-mixed-009": {
+          "machines_used": 51,
+          "residual_cpu": 18278,
+          "residual_mem": 7375,
+          "lower_bound": 44
+        }
+      },
+      "total_machines": 2618,
+      "mean_machines": 65.45,
+      "family_means": {
+        "balanced": 33.0,
+        "cpu_heavy": 90.3,
+        "mem_heavy": 90.8,
+        "mixed": 47.7
+      },
+      "kind": "winner",
+      "candidate_id": "4d1accf86e47",
+      "replicate": 0,
+      "condition": "independent"
+    },
+    "winner:0:evolution": {
+      "per_instance": {
+        "test-balanced-000": {
+          "machines_used": 34,
+          "residual_cpu": 1913,
+          "residual_mem": 2724,
+          "lower_bound": 33
+        },
+        "test-balanced-001": {
+          "machines_used": 33,
+          "residual_cpu": 2822,
+          "residual_mem": 3429,
+          "lower_bound": 31
+        },
+        "test-balanced-002": {
+          "machines_used": 35,
+          "residual_cpu": 3714,
+          "residual_mem": 3920,
+          "lower_bound": 32
+        },
+        "test-balanced-003": {
+          "machines_used": 33,
+          "residual_cpu": 2695,
+          "residual_mem": 3022,
+          "lower_bound": 31
+        },
+        "test-balanced-004": {
+          "machines_used": 34,
+          "residual_cpu": 2333,
+          "residual_mem": 2372,
+          "lower_bound": 32
+        },
+        "test-balanced-005": {
+          "machines_used": 33,
+          "residual_cpu": 2772,
+          "residual_mem": 2076,
+          "lower_bound": 31
+        },
+        "test-balanced-006": {
+          "machines_used": 33,
+          "residual_cpu": 2744,
+          "residual_mem": 2876,
+          "lower_bound": 31
+        },
+        "test-balanced-007": {
+          "machines_used": 32,
+          "residual_cpu": 2469,
+          "residual_mem": 1955,
+          "lower_bound": 31
+        },
+        "test-balanced-008": {
+          "machines_used": 31,
+          "residual_cpu": 3219,
+          "residual_mem": 2291,
+          "lower_bound": 29
+        },
+        "test-balanced-009": {
+          "machines_used": 33,
+          "residual_cpu": 3220,
+          "residual_mem": 3664,
+          "lower_bound": 30
+        },
+        "test-cpu_heavy-000": {
+          "machines_used": 91,
+          "residual_cpu": 23853,
+          "residual_mem": 75452,
+          "lower_bound": 68
+        },
+        "test-cpu_heavy-001": {
+          "machines_used": 93,
+          "residual_cpu": 28886,
+          "residual_mem": 78008,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-002": {
+          "machines_used": 86,
+          "residual_cpu": 22196,
+          "residual_mem": 71150,
+          "lower_bound": 64
+        },
+        "test-cpu_heavy-003": {
+          "machines_used": 88,
+          "residual_cpu": 23278,
+          "residual_mem": 72535,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-004": {
+          "machines_used": 90,
+          "residual_cpu": 25570,
+          "residual_mem": 75643,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-005": {
+          "machines_used": 90,
+          "residual_cpu": 24581,
+          "residual_mem": 75569,
+          "lower_bound": 66
+        },
+        "test-cpu_heavy-006": {
+          "machines_used": 91,
+          "residual_cpu": 24703,
+          "residual_mem": 74977,
+          "lower_bound": 67
+        },
+        "test-cpu_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 24797,
+          "residual_mem": 74116,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-008": {
+          "machines_used": 94,
+          "residual_cpu": 29022,
+          "residual_mem": 79027,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-009": {
+          "machines_used": 90,
+          "residual_cpu": 26031,
+          "residual_mem": 75649,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-000": {
+          "machines_used": 87,
+          "residual_cpu": 71393,
+          "residual_mem": 24038,
+          "lower_bound": 63
+        },
+        "test-mem_heavy-001": {
+          "machines_used": 90,
+          "residual_cpu": 75479,
+          "residual_mem": 26837,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-002": {
+          "machines_used": 91,
+          "residual_cpu": 76069,
+          "residual_mem": 25435,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-003": {
+          "machines_used": 91,
+          "residual_cpu": 75301,
+          "residual_mem": 25018,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-004": {
+          "machines_used": 91,
+          "residual_cpu": 75535,
+          "residual_mem": 27267,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-005": {
+          "machines_used": 94,
+          "residual_cpu": 78564,
+          "residual_mem": 28902,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-006": {
+          "machines_used": 92,
+          "residual_cpu": 77700,
+          "residual_mem": 26605,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 74047,
+          "residual_mem": 24782,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-008": {
+          "machines_used": 90,
+          "residual_cpu": 75729,
+          "residual_mem": 25096,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-009": {
+          "machines_used": 92,
+          "residual_cpu": 76354,
+          "residual_mem": 25052,
+          "lower_bound": 67
+        },
+        "test-mixed-000": {
+          "machines_used": 48,
+          "residual_cpu": 11663,
+          "residual_mem": 9304,
+          "lower_bound": 39
+        },
+        "test-mixed-001": {
+          "machines_used": 50,
+          "residual_cpu": 10661,
+          "residual_mem": 14871,
+          "lower_bound": 40
+        },
+        "test-mixed-002": {
+          "machines_used": 46,
+          "residual_cpu": 6863,
+          "residual_mem": 11191,
+          "lower_bound": 40
+        },
+        "test-mixed-003": {
+          "machines_used": 46,
+          "residual_cpu": 11313,
+          "residual_mem": 6552,
+          "lower_bound": 40
+        },
+        "test-mixed-004": {
+          "machines_used": 46,
+          "residual_cpu": 13546,
+          "residual_mem": 7886,
+          "lower_bound": 39
+        },
+        "test-mixed-005": {
+          "machines_used": 47,
+          "residual_cpu": 6470,
+          "residual_mem": 11880,
+          "lower_bound": 41
+        },
+        "test-mixed-006": {
+          "machines_used": 46,
+          "residual_cpu": 6987,
+          "residual_mem": 11194,
+          "lower_bound": 40
+        },
+        "test-mixed-007": {
+          "machines_used": 48,
+          "residual_cpu": 8138,
+          "residual_mem": 15160,
+          "lower_bound": 40
+        },
+        "test-mixed-008": {
+          "machines_used": 47,
+          "residual_cpu": 6171,
+          "residual_mem": 13851,
+          "lower_bound": 41
+        },
+        "test-mixed-009": {
+          "machines_used": 50,
+          "residual_cpu": 17278,
+          "residual_mem": 6375,
+          "lower_bound": 44
+        }
+      },
+      "total_machines": 2614,
+      "mean_machines": 65.35,
+      "family_means": {
+        "balanced": 33.1,
+        "cpu_heavy": 90.2,
+        "mem_heavy": 90.7,
+        "mixed": 47.4
+      },
+      "kind": "winner",
+      "candidate_id": "a47ce4c0fb61",
+      "replicate": 0,
+      "condition": "evolution"
+    },
+    "winner:1:independent": {
+      "per_instance": {
+        "test-balanced-000": {
+          "machines_used": 34,
+          "residual_cpu": 1913,
+          "residual_mem": 2724,
+          "lower_bound": 33
+        },
+        "test-balanced-001": {
+          "machines_used": 33,
+          "residual_cpu": 2822,
+          "residual_mem": 3429,
+          "lower_bound": 31
+        },
+        "test-balanced-002": {
+          "machines_used": 35,
+          "residual_cpu": 3714,
+          "residual_mem": 3920,
+          "lower_bound": 32
+        },
+        "test-balanced-003": {
+          "machines_used": 33,
+          "residual_cpu": 2695,
+          "residual_mem": 3022,
+          "lower_bound": 31
+        },
+        "test-balanced-004": {
+          "machines_used": 34,
+          "residual_cpu": 2333,
+          "residual_mem": 2372,
+          "lower_bound": 32
+        },
+        "test-balanced-005": {
+          "machines_used": 33,
+          "residual_cpu": 2772,
+          "residual_mem": 2076,
+          "lower_bound": 31
+        },
+        "test-balanced-006": {
+          "machines_used": 33,
+          "residual_cpu": 2744,
+          "residual_mem": 2876,
+          "lower_bound": 31
+        },
+        "test-balanced-007": {
+          "machines_used": 32,
+          "residual_cpu": 2469,
+          "residual_mem": 1955,
+          "lower_bound": 31
+        },
+        "test-balanced-008": {
+          "machines_used": 31,
+          "residual_cpu": 3219,
+          "residual_mem": 2291,
+          "lower_bound": 29
+        },
+        "test-balanced-009": {
+          "machines_used": 33,
+          "residual_cpu": 3220,
+          "residual_mem": 3664,
+          "lower_bound": 30
+        },
+        "test-cpu_heavy-000": {
+          "machines_used": 91,
+          "residual_cpu": 23853,
+          "residual_mem": 75452,
+          "lower_bound": 68
+        },
+        "test-cpu_heavy-001": {
+          "machines_used": 93,
+          "residual_cpu": 28886,
+          "residual_mem": 78008,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-002": {
+          "machines_used": 86,
+          "residual_cpu": 22196,
+          "residual_mem": 71150,
+          "lower_bound": 64
+        },
+        "test-cpu_heavy-003": {
+          "machines_used": 88,
+          "residual_cpu": 23278,
+          "residual_mem": 72535,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-004": {
+          "machines_used": 90,
+          "residual_cpu": 25570,
+          "residual_mem": 75643,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-005": {
+          "machines_used": 90,
+          "residual_cpu": 24581,
+          "residual_mem": 75569,
+          "lower_bound": 66
+        },
+        "test-cpu_heavy-006": {
+          "machines_used": 91,
+          "residual_cpu": 24703,
+          "residual_mem": 74977,
+          "lower_bound": 67
+        },
+        "test-cpu_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 24797,
+          "residual_mem": 74116,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-008": {
+          "machines_used": 94,
+          "residual_cpu": 29022,
+          "residual_mem": 79027,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-009": {
+          "machines_used": 90,
+          "residual_cpu": 26031,
+          "residual_mem": 75649,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-000": {
+          "machines_used": 87,
+          "residual_cpu": 71393,
+          "residual_mem": 24038,
+          "lower_bound": 63
+        },
+        "test-mem_heavy-001": {
+          "machines_used": 90,
+          "residual_cpu": 75479,
+          "residual_mem": 26837,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-002": {
+          "machines_used": 91,
+          "residual_cpu": 76069,
+          "residual_mem": 25435,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-003": {
+          "machines_used": 91,
+          "residual_cpu": 75301,
+          "residual_mem": 25018,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-004": {
+          "machines_used": 91,
+          "residual_cpu": 75535,
+          "residual_mem": 27267,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-005": {
+          "machines_used": 94,
+          "residual_cpu": 78564,
+          "residual_mem": 28902,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-006": {
+          "machines_used": 92,
+          "residual_cpu": 77700,
+          "residual_mem": 26605,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 74047,
+          "residual_mem": 24782,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-008": {
+          "machines_used": 90,
+          "residual_cpu": 75729,
+          "residual_mem": 25096,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-009": {
+          "machines_used": 92,
+          "residual_cpu": 76354,
+          "residual_mem": 25052,
+          "lower_bound": 67
+        },
+        "test-mixed-000": {
+          "machines_used": 48,
+          "residual_cpu": 11663,
+          "residual_mem": 9304,
+          "lower_bound": 39
+        },
+        "test-mixed-001": {
+          "machines_used": 50,
+          "residual_cpu": 10661,
+          "residual_mem": 14871,
+          "lower_bound": 40
+        },
+        "test-mixed-002": {
+          "machines_used": 46,
+          "residual_cpu": 6863,
+          "residual_mem": 11191,
+          "lower_bound": 40
+        },
+        "test-mixed-003": {
+          "machines_used": 46,
+          "residual_cpu": 11313,
+          "residual_mem": 6552,
+          "lower_bound": 40
+        },
+        "test-mixed-004": {
+          "machines_used": 46,
+          "residual_cpu": 13546,
+          "residual_mem": 7886,
+          "lower_bound": 39
+        },
+        "test-mixed-005": {
+          "machines_used": 47,
+          "residual_cpu": 6470,
+          "residual_mem": 11880,
+          "lower_bound": 41
+        },
+        "test-mixed-006": {
+          "machines_used": 46,
+          "residual_cpu": 6987,
+          "residual_mem": 11194,
+          "lower_bound": 40
+        },
+        "test-mixed-007": {
+          "machines_used": 48,
+          "residual_cpu": 8138,
+          "residual_mem": 15160,
+          "lower_bound": 40
+        },
+        "test-mixed-008": {
+          "machines_used": 47,
+          "residual_cpu": 6171,
+          "residual_mem": 13851,
+          "lower_bound": 41
+        },
+        "test-mixed-009": {
+          "machines_used": 50,
+          "residual_cpu": 17278,
+          "residual_mem": 6375,
+          "lower_bound": 44
+        }
+      },
+      "total_machines": 2614,
+      "mean_machines": 65.35,
+      "family_means": {
+        "balanced": 33.1,
+        "cpu_heavy": 90.2,
+        "mem_heavy": 90.7,
+        "mixed": 47.4
+      },
+      "kind": "winner",
+      "candidate_id": "37abe43e17d5",
+      "replicate": 1,
+      "condition": "independent"
+    },
+    "winner:1:evolution": {
+      "per_instance": {
+        "test-balanced-000": {
+          "machines_used": 34,
+          "residual_cpu": 1913,
+          "residual_mem": 2724,
+          "lower_bound": 33
+        },
+        "test-balanced-001": {
+          "machines_used": 33,
+          "residual_cpu": 2822,
+          "residual_mem": 3429,
+          "lower_bound": 31
+        },
+        "test-balanced-002": {
+          "machines_used": 35,
+          "residual_cpu": 3714,
+          "residual_mem": 3920,
+          "lower_bound": 32
+        },
+        "test-balanced-003": {
+          "machines_used": 33,
+          "residual_cpu": 2695,
+          "residual_mem": 3022,
+          "lower_bound": 31
+        },
+        "test-balanced-004": {
+          "machines_used": 34,
+          "residual_cpu": 2333,
+          "residual_mem": 2372,
+          "lower_bound": 32
+        },
+        "test-balanced-005": {
+          "machines_used": 33,
+          "residual_cpu": 2772,
+          "residual_mem": 2076,
+          "lower_bound": 31
+        },
+        "test-balanced-006": {
+          "machines_used": 33,
+          "residual_cpu": 2744,
+          "residual_mem": 2876,
+          "lower_bound": 31
+        },
+        "test-balanced-007": {
+          "machines_used": 32,
+          "residual_cpu": 2469,
+          "residual_mem": 1955,
+          "lower_bound": 31
+        },
+        "test-balanced-008": {
+          "machines_used": 31,
+          "residual_cpu": 3219,
+          "residual_mem": 2291,
+          "lower_bound": 29
+        },
+        "test-balanced-009": {
+          "machines_used": 33,
+          "residual_cpu": 3220,
+          "residual_mem": 3664,
+          "lower_bound": 30
+        },
+        "test-cpu_heavy-000": {
+          "machines_used": 91,
+          "residual_cpu": 23853,
+          "residual_mem": 75452,
+          "lower_bound": 68
+        },
+        "test-cpu_heavy-001": {
+          "machines_used": 93,
+          "residual_cpu": 28886,
+          "residual_mem": 78008,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-002": {
+          "machines_used": 86,
+          "residual_cpu": 22196,
+          "residual_mem": 71150,
+          "lower_bound": 64
+        },
+        "test-cpu_heavy-003": {
+          "machines_used": 88,
+          "residual_cpu": 23278,
+          "residual_mem": 72535,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-004": {
+          "machines_used": 90,
+          "residual_cpu": 25570,
+          "residual_mem": 75643,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-005": {
+          "machines_used": 90,
+          "residual_cpu": 24581,
+          "residual_mem": 75569,
+          "lower_bound": 66
+        },
+        "test-cpu_heavy-006": {
+          "machines_used": 91,
+          "residual_cpu": 24703,
+          "residual_mem": 74977,
+          "lower_bound": 67
+        },
+        "test-cpu_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 24797,
+          "residual_mem": 74116,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-008": {
+          "machines_used": 94,
+          "residual_cpu": 29022,
+          "residual_mem": 79027,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-009": {
+          "machines_used": 90,
+          "residual_cpu": 26031,
+          "residual_mem": 75649,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-000": {
+          "machines_used": 87,
+          "residual_cpu": 71393,
+          "residual_mem": 24038,
+          "lower_bound": 63
+        },
+        "test-mem_heavy-001": {
+          "machines_used": 90,
+          "residual_cpu": 75479,
+          "residual_mem": 26837,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-002": {
+          "machines_used": 91,
+          "residual_cpu": 76069,
+          "residual_mem": 25435,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-003": {
+          "machines_used": 91,
+          "residual_cpu": 75301,
+          "residual_mem": 25018,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-004": {
+          "machines_used": 91,
+          "residual_cpu": 75535,
+          "residual_mem": 27267,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-005": {
+          "machines_used": 94,
+          "residual_cpu": 78564,
+          "residual_mem": 28902,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-006": {
+          "machines_used": 92,
+          "residual_cpu": 77700,
+          "residual_mem": 26605,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 74047,
+          "residual_mem": 24782,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-008": {
+          "machines_used": 90,
+          "residual_cpu": 75729,
+          "residual_mem": 25096,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-009": {
+          "machines_used": 92,
+          "residual_cpu": 76354,
+          "residual_mem": 25052,
+          "lower_bound": 67
+        },
+        "test-mixed-000": {
+          "machines_used": 48,
+          "residual_cpu": 11663,
+          "residual_mem": 9304,
+          "lower_bound": 39
+        },
+        "test-mixed-001": {
+          "machines_used": 50,
+          "residual_cpu": 10661,
+          "residual_mem": 14871,
+          "lower_bound": 40
+        },
+        "test-mixed-002": {
+          "machines_used": 46,
+          "residual_cpu": 6863,
+          "residual_mem": 11191,
+          "lower_bound": 40
+        },
+        "test-mixed-003": {
+          "machines_used": 46,
+          "residual_cpu": 11313,
+          "residual_mem": 6552,
+          "lower_bound": 40
+        },
+        "test-mixed-004": {
+          "machines_used": 46,
+          "residual_cpu": 13546,
+          "residual_mem": 7886,
+          "lower_bound": 39
+        },
+        "test-mixed-005": {
+          "machines_used": 47,
+          "residual_cpu": 6470,
+          "residual_mem": 11880,
+          "lower_bound": 41
+        },
+        "test-mixed-006": {
+          "machines_used": 46,
+          "residual_cpu": 6987,
+          "residual_mem": 11194,
+          "lower_bound": 40
+        },
+        "test-mixed-007": {
+          "machines_used": 48,
+          "residual_cpu": 8138,
+          "residual_mem": 15160,
+          "lower_bound": 40
+        },
+        "test-mixed-008": {
+          "machines_used": 47,
+          "residual_cpu": 6171,
+          "residual_mem": 13851,
+          "lower_bound": 41
+        },
+        "test-mixed-009": {
+          "machines_used": 50,
+          "residual_cpu": 17278,
+          "residual_mem": 6375,
+          "lower_bound": 44
+        }
+      },
+      "total_machines": 2614,
+      "mean_machines": 65.35,
+      "family_means": {
+        "balanced": 33.1,
+        "cpu_heavy": 90.2,
+        "mem_heavy": 90.7,
+        "mixed": 47.4
+      },
+      "kind": "winner",
+      "candidate_id": "ea15198a8e67",
+      "replicate": 1,
+      "condition": "evolution"
+    },
+    "winner:2:independent": {
+      "per_instance": {
+        "test-balanced-000": {
+          "machines_used": 34,
+          "residual_cpu": 1913,
+          "residual_mem": 2724,
+          "lower_bound": 33
+        },
+        "test-balanced-001": {
+          "machines_used": 32,
+          "residual_cpu": 1822,
+          "residual_mem": 2429,
+          "lower_bound": 31
+        },
+        "test-balanced-002": {
+          "machines_used": 35,
+          "residual_cpu": 3714,
+          "residual_mem": 3920,
+          "lower_bound": 32
+        },
+        "test-balanced-003": {
+          "machines_used": 33,
+          "residual_cpu": 2695,
+          "residual_mem": 3022,
+          "lower_bound": 31
+        },
+        "test-balanced-004": {
+          "machines_used": 34,
+          "residual_cpu": 2333,
+          "residual_mem": 2372,
+          "lower_bound": 32
+        },
+        "test-balanced-005": {
+          "machines_used": 33,
+          "residual_cpu": 2772,
+          "residual_mem": 2076,
+          "lower_bound": 31
+        },
+        "test-balanced-006": {
+          "machines_used": 33,
+          "residual_cpu": 2744,
+          "residual_mem": 2876,
+          "lower_bound": 31
+        },
+        "test-balanced-007": {
+          "machines_used": 32,
+          "residual_cpu": 2469,
+          "residual_mem": 1955,
+          "lower_bound": 31
+        },
+        "test-balanced-008": {
+          "machines_used": 31,
+          "residual_cpu": 3219,
+          "residual_mem": 2291,
+          "lower_bound": 29
+        },
+        "test-balanced-009": {
+          "machines_used": 33,
+          "residual_cpu": 3220,
+          "residual_mem": 3664,
+          "lower_bound": 30
+        },
+        "test-cpu_heavy-000": {
+          "machines_used": 91,
+          "residual_cpu": 23853,
+          "residual_mem": 75452,
+          "lower_bound": 68
+        },
+        "test-cpu_heavy-001": {
+          "machines_used": 93,
+          "residual_cpu": 28886,
+          "residual_mem": 78008,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-002": {
+          "machines_used": 86,
+          "residual_cpu": 22196,
+          "residual_mem": 71150,
+          "lower_bound": 64
+        },
+        "test-cpu_heavy-003": {
+          "machines_used": 88,
+          "residual_cpu": 23278,
+          "residual_mem": 72535,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-004": {
+          "machines_used": 90,
+          "residual_cpu": 25570,
+          "residual_mem": 75643,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-005": {
+          "machines_used": 90,
+          "residual_cpu": 24581,
+          "residual_mem": 75569,
+          "lower_bound": 66
+        },
+        "test-cpu_heavy-006": {
+          "machines_used": 91,
+          "residual_cpu": 24703,
+          "residual_mem": 74977,
+          "lower_bound": 67
+        },
+        "test-cpu_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 24797,
+          "residual_mem": 74116,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-008": {
+          "machines_used": 94,
+          "residual_cpu": 29022,
+          "residual_mem": 79027,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-009": {
+          "machines_used": 90,
+          "residual_cpu": 26031,
+          "residual_mem": 75649,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-000": {
+          "machines_used": 86,
+          "residual_cpu": 70393,
+          "residual_mem": 23038,
+          "lower_bound": 63
+        },
+        "test-mem_heavy-001": {
+          "machines_used": 90,
+          "residual_cpu": 75479,
+          "residual_mem": 26837,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-002": {
+          "machines_used": 90,
+          "residual_cpu": 75069,
+          "residual_mem": 24435,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-003": {
+          "machines_used": 91,
+          "residual_cpu": 75301,
+          "residual_mem": 25018,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-004": {
+          "machines_used": 91,
+          "residual_cpu": 75535,
+          "residual_mem": 27267,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-005": {
+          "machines_used": 94,
+          "residual_cpu": 78564,
+          "residual_mem": 28902,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-006": {
+          "machines_used": 92,
+          "residual_cpu": 77700,
+          "residual_mem": 26605,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 74047,
+          "residual_mem": 24782,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-008": {
+          "machines_used": 90,
+          "residual_cpu": 75729,
+          "residual_mem": 25096,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-009": {
+          "machines_used": 92,
+          "residual_cpu": 76354,
+          "residual_mem": 25052,
+          "lower_bound": 67
+        },
+        "test-mixed-000": {
+          "machines_used": 48,
+          "residual_cpu": 11663,
+          "residual_mem": 9304,
+          "lower_bound": 39
+        },
+        "test-mixed-001": {
+          "machines_used": 51,
+          "residual_cpu": 11661,
+          "residual_mem": 15871,
+          "lower_bound": 40
+        },
+        "test-mixed-002": {
+          "machines_used": 46,
+          "residual_cpu": 6863,
+          "residual_mem": 11191,
+          "lower_bound": 40
+        },
+        "test-mixed-003": {
+          "machines_used": 46,
+          "residual_cpu": 11313,
+          "residual_mem": 6552,
+          "lower_bound": 40
+        },
+        "test-mixed-004": {
+          "machines_used": 46,
+          "residual_cpu": 13546,
+          "residual_mem": 7886,
+          "lower_bound": 39
+        },
+        "test-mixed-005": {
+          "machines_used": 47,
+          "residual_cpu": 6470,
+          "residual_mem": 11880,
+          "lower_bound": 41
+        },
+        "test-mixed-006": {
+          "machines_used": 45,
+          "residual_cpu": 5987,
+          "residual_mem": 10194,
+          "lower_bound": 40
+        },
+        "test-mixed-007": {
+          "machines_used": 48,
+          "residual_cpu": 8138,
+          "residual_mem": 15160,
+          "lower_bound": 40
+        },
+        "test-mixed-008": {
+          "machines_used": 47,
+          "residual_cpu": 6171,
+          "residual_mem": 13851,
+          "lower_bound": 41
+        },
+        "test-mixed-009": {
+          "machines_used": 50,
+          "residual_cpu": 17278,
+          "residual_mem": 6375,
+          "lower_bound": 44
+        }
+      },
+      "total_machines": 2611,
+      "mean_machines": 65.275,
+      "family_means": {
+        "balanced": 33.0,
+        "cpu_heavy": 90.2,
+        "mem_heavy": 90.5,
+        "mixed": 47.4
+      },
+      "kind": "winner",
+      "candidate_id": "9af30fc8cb62",
+      "replicate": 2,
+      "condition": "independent"
+    },
+    "winner:2:evolution": {
+      "per_instance": {
+        "test-balanced-000": {
+          "machines_used": 34,
+          "residual_cpu": 1913,
+          "residual_mem": 2724,
+          "lower_bound": 33
+        },
+        "test-balanced-001": {
+          "machines_used": 33,
+          "residual_cpu": 2822,
+          "residual_mem": 3429,
+          "lower_bound": 31
+        },
+        "test-balanced-002": {
+          "machines_used": 35,
+          "residual_cpu": 3714,
+          "residual_mem": 3920,
+          "lower_bound": 32
+        },
+        "test-balanced-003": {
+          "machines_used": 33,
+          "residual_cpu": 2695,
+          "residual_mem": 3022,
+          "lower_bound": 31
+        },
+        "test-balanced-004": {
+          "machines_used": 34,
+          "residual_cpu": 2333,
+          "residual_mem": 2372,
+          "lower_bound": 32
+        },
+        "test-balanced-005": {
+          "machines_used": 33,
+          "residual_cpu": 2772,
+          "residual_mem": 2076,
+          "lower_bound": 31
+        },
+        "test-balanced-006": {
+          "machines_used": 33,
+          "residual_cpu": 2744,
+          "residual_mem": 2876,
+          "lower_bound": 31
+        },
+        "test-balanced-007": {
+          "machines_used": 32,
+          "residual_cpu": 2469,
+          "residual_mem": 1955,
+          "lower_bound": 31
+        },
+        "test-balanced-008": {
+          "machines_used": 31,
+          "residual_cpu": 3219,
+          "residual_mem": 2291,
+          "lower_bound": 29
+        },
+        "test-balanced-009": {
+          "machines_used": 33,
+          "residual_cpu": 3220,
+          "residual_mem": 3664,
+          "lower_bound": 30
+        },
+        "test-cpu_heavy-000": {
+          "machines_used": 91,
+          "residual_cpu": 23853,
+          "residual_mem": 75452,
+          "lower_bound": 68
+        },
+        "test-cpu_heavy-001": {
+          "machines_used": 93,
+          "residual_cpu": 28886,
+          "residual_mem": 78008,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-002": {
+          "machines_used": 86,
+          "residual_cpu": 22196,
+          "residual_mem": 71150,
+          "lower_bound": 64
+        },
+        "test-cpu_heavy-003": {
+          "machines_used": 88,
+          "residual_cpu": 23278,
+          "residual_mem": 72535,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-004": {
+          "machines_used": 90,
+          "residual_cpu": 25570,
+          "residual_mem": 75643,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-005": {
+          "machines_used": 90,
+          "residual_cpu": 24581,
+          "residual_mem": 75569,
+          "lower_bound": 66
+        },
+        "test-cpu_heavy-006": {
+          "machines_used": 91,
+          "residual_cpu": 24703,
+          "residual_mem": 74977,
+          "lower_bound": 67
+        },
+        "test-cpu_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 24797,
+          "residual_mem": 74116,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-008": {
+          "machines_used": 94,
+          "residual_cpu": 29022,
+          "residual_mem": 79027,
+          "lower_bound": 65
+        },
+        "test-cpu_heavy-009": {
+          "machines_used": 90,
+          "residual_cpu": 26031,
+          "residual_mem": 75649,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-000": {
+          "machines_used": 87,
+          "residual_cpu": 71393,
+          "residual_mem": 24038,
+          "lower_bound": 63
+        },
+        "test-mem_heavy-001": {
+          "machines_used": 90,
+          "residual_cpu": 75479,
+          "residual_mem": 26837,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-002": {
+          "machines_used": 91,
+          "residual_cpu": 76069,
+          "residual_mem": 25435,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-003": {
+          "machines_used": 91,
+          "residual_cpu": 75301,
+          "residual_mem": 25018,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-004": {
+          "machines_used": 91,
+          "residual_cpu": 75535,
+          "residual_mem": 27267,
+          "lower_bound": 64
+        },
+        "test-mem_heavy-005": {
+          "machines_used": 94,
+          "residual_cpu": 78564,
+          "residual_mem": 28902,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-006": {
+          "machines_used": 92,
+          "residual_cpu": 77700,
+          "residual_mem": 26605,
+          "lower_bound": 66
+        },
+        "test-mem_heavy-007": {
+          "machines_used": 89,
+          "residual_cpu": 74047,
+          "residual_mem": 24782,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-008": {
+          "machines_used": 90,
+          "residual_cpu": 75729,
+          "residual_mem": 25096,
+          "lower_bound": 65
+        },
+        "test-mem_heavy-009": {
+          "machines_used": 92,
+          "residual_cpu": 76354,
+          "residual_mem": 25052,
+          "lower_bound": 67
+        },
+        "test-mixed-000": {
+          "machines_used": 48,
+          "residual_cpu": 11663,
+          "residual_mem": 9304,
+          "lower_bound": 39
+        },
+        "test-mixed-001": {
+          "machines_used": 50,
+          "residual_cpu": 10661,
+          "residual_mem": 14871,
+          "lower_bound": 40
+        },
+        "test-mixed-002": {
+          "machines_used": 46,
+          "residual_cpu": 6863,
+          "residual_mem": 11191,
+          "lower_bound": 40
+        },
+        "test-mixed-003": {
+          "machines_used": 46,
+          "residual_cpu": 11313,
+          "residual_mem": 6552,
+          "lower_bound": 40
+        },
+        "test-mixed-004": {
+          "machines_used": 46,
+          "residual_cpu": 13546,
+          "residual_mem": 7886,
+          "lower_bound": 39
+        },
+        "test-mixed-005": {
+          "machines_used": 47,
+          "residual_cpu": 6470,
+          "residual_mem": 11880,
+          "lower_bound": 41
+        },
+        "test-mixed-006": {
+          "machines_used": 46,
+          "residual_cpu": 6987,
+          "residual_mem": 11194,
+          "lower_bound": 40
+        },
+        "test-mixed-007": {
+          "machines_used": 48,
+          "residual_cpu": 8138,
+          "residual_mem": 15160,
+          "lower_bound": 40
+        },
+        "test-mixed-008": {
+          "machines_used": 47,
+          "residual_cpu": 6171,
+          "residual_mem": 13851,
+          "lower_bound": 41
+        },
+        "test-mixed-009": {
+          "machines_used": 50,
+          "residual_cpu": 17278,
+          "residual_mem": 6375,
+          "lower_bound": 44
+        }
+      },
+      "total_machines": 2614,
+      "mean_machines": 65.35,
+      "family_means": {
+        "balanced": 33.1,
+        "cpu_heavy": 90.2,
+        "mem_heavy": 90.7,
+        "mixed": 47.4
+      },
+      "kind": "winner",
+      "candidate_id": "b053754db7b8",
+      "replicate": 2,
+      "condition": "evolution"
+    }
+  }
+}

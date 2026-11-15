@@ -1,0 +1,88 @@
+{
+  "generator_version": 1,
+  "generator_config": {
+    "data_dir": "data/main",
+    "dev_seed": 1001,
+    "test_seed": 2002,
+    "dev_instances_per_family": 3,
+    "test_instances_per_family": 10,
+    "jobs_per_instance": 100
+  },
+  "capacity": {
+    "cpu": 1000,
+    "mem": 1000
+  },
+  "families": [
+    "balanced",
+    "cpu_heavy",
+    "mem_heavy",
+    "mixed"
+  ],
+  "splits": {
+    "dev": {
+      "n_instances": 12,
+      "files": {
+        "dev-balanced-000.json": "c05317c84fbf44908784635188bc89313643585ef9adc77310fbf45db21d2075",
+        "dev-balanced-001.json": "0470d1d34422ea6a5670f5db63fd37b4fdbd5cc96eb95412913615b5df8c3ef3",
+        "dev-balanced-002.json": "f4b32f64a140858b01f9172542bbbf996053fd387ee2f77167e535fed48ddd6e",
+        "dev-cpu_heavy-000.json": "9250fd62a561a22a53aadfea0248c39daf1fad645e347b42094ae0f5a98afd3a",
+        "dev-cpu_heavy-001.json": "831a1ec8cfce96e8109d3ca8d2f9eaa2a0cb1ec4b1b498e47d8ad091002818a9",
+        "dev-cpu_heavy-002.json": "084bd8f82770df47cc5cbbc5832ca7d3864af4fb3ebf04c06c20b5c7cb7fd51a",
+        "dev-mem_heavy-000.json": "d14a53cacbcbb91f297a3f0db1241f3904c3d5b6c00d008023ff98bf0c565d63",
+        "dev-mem_heavy-001.json": "907ee67596546ebc4a002e0d21896d0f5da744cc792e0b562a4f90ed8ccae2d8",
+        "dev-mem_heavy-002.json": "9f65fca5086ac2d7727ca2b667091348c3bc74e762719ecd16fc9e905da21c0d",
+        "dev-mixed-000.json": "9470aeb4cb000790015adbec493a56a69a078eefea2a668152cc7dd1268e3100",
+        "dev-mixed-001.json": "37289b69e1bc9ad5af044e8a5096016c8aecadf2653c287ac9b9f793c6bd6078",
+        "dev-mixed-002.json": "8ec4c9a928d01ed691f0d6059900d00e8a0e0978d374ebbc9c15c0c439c7420f"
+      },
+      "split_hash": "a2d54c2a7383bf8576893faf093299250cfcb410d9a87af2f438eeba9ebe1657"
+    },
+    "test": {
+      "n_instances": 40,
+      "files": {
+        "test-balanced-000.json": "fd4b90fb777519ff7a83884c04722660bf2140e5e12cd42ddaa697ebedac1cf3",
+        "test-balanced-001.json": "a8976a0cc9a5face40e22439aad0afcf1fbec9703406b31a37c0f453dadf97a2",
+        "test-balanced-002.json": "cd9c6a2f9f9d885367752969522d5cecdc34376647e02a23c4326e97075a4e83",
+        "test-balanced-003.json": "fd188a5c5654a99d14dad80597fd14f521caf6bc562d38bea6e149e68e418c94",
+        "test-balanced-004.json": "fb039832e4e884ec1730f3763b592a597a7243ea4cdfc5b0dee69ea041be0dd1",
+        "test-balanced-005.json": "a1d37908d2827592ef41839e43044c7ed1feea1d45d47a38c7f7674ef0d236e7",
+        "test-balanced-006.json": "221d49b46952fbd329f96fa8d37ee740ce819047dc2b49706b779ecf4992ab45",
+        "test-balanced-007.json": "b978a39422df3076b2220f47079995710b664ed1097c15e2620116e363a628db",
+        "test-balanced-008.json": "30a205567c57f86e44ce68ba50db2440af829db14ba40140f2beff0a75ebedcf",
+        "test-balanced-009.json": "7e00bf16809aa7b640942aadbec632ca87eb2f58ba399feed7c96e4936969262",
+        "test-cpu_heavy-000.json": "2220524a171e42af967bc8c111a75dc92bbc2032509ae8a8d1f31b135bac41d4",
+        "test-cpu_heavy-001.json": "2337ee20ff1c6e8d9778bebef3f82e595a896ded509e726e383f20be7ab85c14",
+        "test-cpu_heavy-002.json": "145709dab372428d4165cffdf21974976fd8e843f734b76843897f7e8ccfe9f9",
+        "test-cpu_heavy-003.json": "6c6c5fcb7f092fa681768a942f0cb31d0406fab1e572990868c1d2087c68cc2a",
+        "test-cpu_heavy-004.json": "86b3ae1868b28be575d47860fdd7650c0b5fd1cfe6a9afe22befe72989f59af5",
+        "test-cpu_heavy-005.json": "d539db84ed706ece1485fabb3922877b2573d2e035b646ae195b8764e9e1c760",
+        "test-cpu_heavy-006.json": "8ad96836d281158cfeb1b9f9fb96a4f89d7b6219a35876eee56d50bfa045037b",
+        "test-cpu_heavy-007.json": "f3d5ab4517c390c078149ea74e5cd7dc6343bea9d5d6b37d5b24eb2a30aade07",
+        "test-cpu_heavy-008.json": "98e3cae3a2cadf68bb8be644f956a5a0fc74d3edc7384c87747b0395f216e09f",
+        "test-cpu_heavy-009.json": "3fbe250a39bfd0e4770362d37487f51583ea75be11dc25c2aae76c35d7d8aa49",
+        "test-mem_heavy-000.json": "820d55dcd010b0fef2830e3c1dee0a475d32921b2557f27fa3e8f5aa2c81d9c0",
+        "test-mem_heavy-001.json": "8f28cd2225f1691fea23103084b5e1235c00d3d16aeb8b4e8f88cb60192f4ee9",
+        "test-mem_heavy-002.json": "714b201e2fb1d82883e02e01f0e5ba36c7cca7cb6d20fb16f907ff203e5e737d",
+        "test-mem_heavy-003.json": "aa2e022f32423e0461abb9117bf5a29ce3b80840c8df7715fb4a0fc9dcf6dd39",
+        "test-mem_heavy-004.json": "79feb801437ca45cd0d4d4cf5e98b83c174e4e1a60c0518c751dccdf3f96598b",
+        "test-mem_heavy-005.json": "bd8c6ecaa231aa8366e06a797688ff3f319f591f778c9aeee384eb68fd57dbc8",
+        "test-mem_heavy-006.json": "4f6b71257abdffff4f3c84695257a2b4446c34ebbfda883c41ac09e5fc8bdb0d",
+        "test-mem_heavy-007.json": "52d28261e8c270aeedbf9c6d2fc70bc785375d98f1594a932a5b7c5bdf6db1ad",
+        "test-mem_heavy-008.json": "1be2ae8edc21998203f6e37d58ad3a55dd9cdf9448bdaffff6175deab3c14696",
+        "test-mem_heavy-009.json": "c9c30e9c26dadb87b46167f89bb9619a4723328db9e0177c6b879094cc345a16",
+        "test-mixed-000.json": "ea6db28850ef4f2107a094a11b13f2bd9876895286e7d8cfe7e6339768903a0a",
+        "test-mixed-001.json": "430f29229e2650ea3a5f906a44f1fd56af3d87a0b0664a7cb5198520f5077742",
+        "test-mixed-002.json": "b9d26f0606d466635c83923f5892a267b84b1e2d3fe71afa982cc664e6d4e4ff",
+        "test-mixed-003.json": "e82638756d20e0c21b875c134a4178551992f3fa58a18ee5bd219db624e4cda1",
+        "test-mixed-004.json": "1eedd8a53d8b4664d3d38c4cf934bad4be5d140a643aa2ceeb8325b49ced9fa5",
+        "test-mixed-005.json": "ade7c39f8a879972dbf8aacfa078400404b887d0f24e599bb29b37a5cfd95968",
+        "test-mixed-006.json": "566ae0342c1b9ec7039b9c1898d5916a7ce022a8e8b7a8d45b42fbecc2a143b9",
+        "test-mixed-007.json": "dd44debd751c0f999f0a750385b98cdacb210d9c556d4064eba50a1c1d9f998d",
+        "test-mixed-008.json": "4631383a5febe126f04fdd4865f6df68364914264809f1aa185910580eb66d40",
+        "test-mixed-009.json": "49c8ef51034932e40dbb69d6c8267b06322f8dc7ba53f83426c914434606e879"
+      },
+      "split_hash": "9b5239474876b82da0235ae4e3d96e62e63b4442e92911f37acdc60137453e65"
+    }
+  },
+  "created_at": "2026-11-14T06:47:33+00:00"
+}

@@ -1,0 +1,7 @@
+replicate,condition,proposal_budget,completed_proposals,valid_proposals,valid_fraction,request_failures,best_dev_mean_machines,winner_candidate_id,winner_from_slot,heldout_mean_machines,heldout_pct_fewer_machines_vs_best_fit,request_attempts,prompt_tokens,output_tokens_incl_thinking,attempts_with_unknown_usage,latency_s_total,mean_latency_s,est_cost_usd,synthetic_mock
+0,independent,20,20,20,1.0,0,64.4167,4d1accf86e47,initial,65.45,0.0,20,13160,11763,0,128.953,6.448,unknown,False
+0,evolution,20,20,20,1.0,0,64.25,a47ce4c0fb61,5,65.35,0.153,20,16859,13458,0,143.401,7.17,unknown,False
+1,independent,20,20,20,1.0,0,64.3333,37abe43e17d5,1,65.35,0.153,20,13160,12048,0,135.032,6.752,unknown,False
+1,evolution,20,20,19,0.95,0,64.3333,ea15198a8e67,9,65.35,0.153,20,14600,12538,0,138.321,6.916,unknown,False
+2,independent,20,20,20,1.0,0,64.3333,9af30fc8cb62,0,65.275,0.267,20,13160,12157,0,134.436,6.722,unknown,False
+2,evolution,20,20,19,0.95,0,64.3333,b053754db7b8,2,65.35,0.153,20,14656,12240,0,138.899,6.945,unknown,False

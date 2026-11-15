@@ -1,0 +1,60 @@
+{
+  "replicate": 0,
+  "condition": "evolution",
+  "slot": 2,
+  "global_index": 4,
+  "completed_at": "2026-11-15T00:24:44+00:00",
+  "synthetic": false,
+  "parent_candidate_id": "dc73c3532c65",
+  "prompt": "You are improving a heuristic for online two-dimensional bin packing (a simplified machine-placement problem).\n\nTask rules (enforced by a trusted evaluator you cannot change):\n- Every machine has CPU capacity 1000 and memory capacity 1000 (integer units).\n- Jobs arrive one at a time in a fixed order and never leave. Each job has integer job_cpu and job_mem demands.\n- For each job, the evaluator calls your function once for every EXISTING machine that can fit the job, passing that machine's current free_cpu and free_mem (before placement).\n- The job goes to the machine with the highest score; ties go to the earliest-created machine.\n- If no existing machine fits, a new machine is opened without calling your function.\n\nObjective: minimize the mean number of machines used across the development workloads (lower is better).\nWorkload families: balanced (similar CPU and memory demand), cpu_heavy, mem_heavy, and mixed (each job drawn from one of the other three families).\n\nProgram constraints (programs that violate them are rejected and still count as an attempt):\n- Define exactly one function: def score(job_cpu, job_mem, free_cpu, free_mem):\n- Return a finite int or float (not a bool).\n- Allowed: arithmetic (+ - * / // % **), comparisons, and/or/not, if statements, conditional expressions, simple local variable assignments, return statements, and calls to abs, min and max.\n- Exponents must be numeric literals with magnitude at most 4. Numeric literals must have magnitude at most 1e+06.\n- Not allowed: imports, attribute access, indexing, loops, comprehensions, nested functions, lambdas, global/nonlocal, decorators, strings other than a docstring, or calls to anything except abs/min/max.\n- Keep the source under 2000 characters.\n\n### CURRENT PROGRAM BEGIN\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Favor bins that maximize the L2-norm of utilization after placement.\"\"\"\n    new_cpu = 1000 - (free_cpu - job_cpu)\n    new_mem = 1000 - (free_mem - job_mem)\n    return (new_cpu ** 2 + new_mem ** 2) / 1000000\n```\n### CURRENT PROGRAM END\n\nEvaluation feedback for the current program:\nStatus: valid.\nMean machines used (all development instances): 64.333\nMean machines used per family:\n  balanced: 33.000\n  cpu_heavy: 89.000\n  mem_heavy: 90.333\n  mixed: 45.000\n\nPropose one improved version of the score function that you expect to use fewer machines.\nReply with a short explanation (at most three sentences) followed by exactly one ```python code block containing the complete function.\n",
+  "response": {
+    "ok": true,
+    "fatal": false,
+    "text": "on cpu_heavy?\nCurrent program:\nMachine A: $new\\_cpu = 950, new\\_mem = 100 \\implies 950^2 + 100^2 = 902,500 + 10,000 = 912,500$.\nMachine B: $new\\_cpu = 600, new\\_mem = 70 \\implies 600^2 + 70^2 = 360,000 + 4,900 = 364,900$.\nMachine A wins.\nSo on cpu_heavy, both current program and $-(r_c + r_m)$ pick Machine A.\nIn fact, on pure cpu_heavy and mem_heavy, all reasonable packing heuristics pack almost identically because it's just 1D packing.\nWait, why did current program get:\ncpu_heavy: 89.000\nmem_heavy: 90.333\nCould that be improved?\nWait! In 1D bin packing:\nIs Best Fit the best online algorithm?\nBest Fit is very close to optimal for online 1D bin packing! (1.7 competitive ratio, practically <1.05 of optimal).\nWhat about balanced: 33.000?\nAnd mixed: 45.000?\n\nWait! Look at mixed: 45.000",
+    "attempts": [
+      {
+        "attempt": 1,
+        "status": "ok",
+        "started_at": 1794702221.8229172,
+        "latency_s": 59.90733495913446,
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "usage": {
+          "prompt_token_count": 660,
+          "candidates_token_count": 324,
+          "thoughts_token_count": 7864,
+          "cached_content_token_count": null,
+          "tool_use_prompt_token_count": null,
+          "total_token_count": 8848
+        }
+      }
+    ],
+    "finish_reason": "FinishReason.MAX_TOKENS",
+    "model_version": "gemini-3.8-flash",
+    "response_id": "jvv4auujAb6f-8YP5a_w-Qc",
+    "synthetic": false
+  },
+  "request_status": "ok",
+  "candidate": {
+    "raw_response": "on cpu_heavy?\nCurrent program:\nMachine A: $new\\_cpu = 950, new\\_mem = 100 \\implies 950^2 + 100^2 = 902,500 + 10,000 = 912,500$.\nMachine B: $new\\_cpu = 600, new\\_mem = 70 \\implies 600^2 + 70^2 = 360,000 + 4,900 = 364,900$.\nMachine A wins.\nSo on cpu_heavy, both current program and $-(r_c + r_m)$ pick Machine A.\nIn fact, on pure cpu_heavy and mem_heavy, all reasonable packing heuristics pack almost identically because it's just 1D packing.\nWait, why did current program get:\ncpu_heavy: 89.000\nmem_heavy: 90.333\nCould that be improved?\nWait! In 1D bin packing:\nIs Best Fit the best online algorithm?\nBest Fit is very close to optimal for online 1D bin packing! (1.7 competitive ratio, practically <1.05 of optimal).\nWhat about balanced: 33.000?\nAnd mixed: 45.000?\n\nWait! Look at mixed: 45.000",
+    "source": null,
+    "extraction_error": "no fenced python code block defining score(...) found"
+  },
+  "eval": {
+    "valid": false,
+    "error_kind": "extraction",
+    "error": "no fenced python code block defining score(...) found"
+  },
+  "improved": false,
+  "incumbent_before": {
+    "candidate_id": "dc73c3532c65",
+    "total_machines": 772
+  },
+  "incumbent_after": {
+    "candidate_id": "dc73c3532c65",
+    "total_machines": 772,
+    "mean_machines": 64.33333333333333,
+    "from_slot": 1
+  }
+}

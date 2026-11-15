@@ -1,0 +1,145 @@
+{
+  "replicate": 1,
+  "condition": "evolution",
+  "slot": 0,
+  "global_index": 40,
+  "completed_at": "2026-11-15T01:02:55+00:00",
+  "synthetic": false,
+  "parent_candidate_id": "4d1accf86e47",
+  "prompt": "You are improving a heuristic for online two-dimensional bin packing (a simplified machine-placement problem).\n\nTask rules (enforced by a trusted evaluator you cannot change):\n- Every machine has CPU capacity 1000 and memory capacity 1000 (integer units).\n- Jobs arrive one at a time in a fixed order and never leave. Each job has integer job_cpu and job_mem demands.\n- For each job, the evaluator calls your function once for every EXISTING machine that can fit the job, passing that machine's current free_cpu and free_mem (before placement).\n- The job goes to the machine with the highest score; ties go to the earliest-created machine.\n- If no existing machine fits, a new machine is opened without calling your function.\n\nObjective: minimize the mean number of machines used across the development workloads (lower is better).\nWorkload families: balanced (similar CPU and memory demand), cpu_heavy, mem_heavy, and mixed (each job drawn from one of the other three families).\n\nProgram constraints (programs that violate them are rejected and still count as an attempt):\n- Define exactly one function: def score(job_cpu, job_mem, free_cpu, free_mem):\n- Return a finite int or float (not a bool).\n- Allowed: arithmetic (+ - * / // % **), comparisons, and/or/not, if statements, conditional expressions, simple local variable assignments, return statements, and calls to abs, min and max.\n- Exponents must be numeric literals with magnitude at most 4. Numeric literals must have magnitude at most 1e+06.\n- Not allowed: imports, attribute access, indexing, loops, comprehensions, nested functions, lambdas, global/nonlocal, decorators, strings other than a docstring, or calls to anything except abs/min/max.\n- Keep the source under 2000 characters.\n\n### CURRENT PROGRAM BEGIN\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Best fit: prefer the machine with the least total residual capacity after placement.\"\"\"\n    return -((free_cpu - job_cpu) + (free_mem - job_mem)) / 1000\n```\n### CURRENT PROGRAM END\n\nEvaluation feedback for the current program:\nStatus: valid.\nMean machines used (all development instances): 64.417\nMean machines used per family:\n  balanced: 33.000\n  cpu_heavy: 89.333\n  mem_heavy: 90.333\n  mixed: 45.000\n\nPropose one improved version of the score function that you expect to use fewer machines.\nFirst, write a short analysis (up to about 250 words): using the feedback above, explain why the current program wastes machines, especially on the families with the most machines, and what placement behaviour would reduce that.\nThen give exactly one ```python code block containing the complete improved function.\n",
+  "response": {
+    "ok": true,
+    "fatal": false,
+    "text": "### Analysis\nThe current program uses standard L1 Best Fit: minimizing the sum of residual capacities $(r_{cpu} + r_{mem})$. \n\nThis performs poorly on skewed workloads (`cpu_heavy` at 89.33, `mem_heavy` at 90.33, and `mixed` at 45.00) because it treats residual CPU and residual memory as interchangeable. When a machine is already depleted along its bottleneck dimension (e.g. almost 0 free CPU, but 800 free memory), placing a small CPU, moderate memory job onto it might reduce total residual $(r_{cpu} + r_{mem})$, but it does not change the fact that the machine is stranded by CPU. \n\nCrucially, in vector bin packing, residual capacity along the *tighter* dimension determines whether another job can fit. Leaving a balanced or aligned residual (or aligning the residual capacity with complementary incoming job ratios) maximizes the chance that future jobs fit without opening new bins. \n\nTwo key improvements will reduce bin count:\n1. **Bottleneck / Max-residual focus (Chebyshev / $L_\\infty$ or $L_2$ norm)**: Instead of penalizing $r_{cpu} + r_{mem}$, penalize $\\max(r_{cpu}, r_{mem})$, or a weighted combination that heavily penalizes the maximum residual dimension. When placing a job, leaving 50 CPU and 50 MEM is vastly superior to leaving 0 CPU and 100 MEM, because 100 MEM is stranded capacity that cannot be paired if jobs need both resources.\n2. **Dimension alignment / balance bonus**: Penalize the imbalance $|r_{cpu} - r_{mem}|$ after placement, incentivizing machines to be consumed evenly and preventing stranded single-resource capacity.\n\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Penalize remaining capacity with higher weight on the larger residual dimension\n    and penalize residual imbalance to avoid stranding a single resource.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Minimize both the maximum remaining dimension and total remaining capacity,\n    # plus penalize residual imbalance.\n    max_rem = max(rem_cpu, rem_mem)\n    sum_rem = rem_cpu + rem_mem\n    diff_rem = abs(rem_cpu - rem_mem)\n\n    return -(max_rem * 2.0 + sum_rem * 1.0 + diff_rem * 1.5)\n```",
+    "attempts": [
+      {
+        "attempt": 1,
+        "status": "ok",
+        "started_at": 1794704568.6739671,
+        "latency_s": 6.397221999708563,
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "usage": {
+          "prompt_token_count": 658,
+          "candidates_token_count": 566,
+          "thoughts_token_count": null,
+          "cached_content_token_count": null,
+          "tool_use_prompt_token_count": null,
+          "total_token_count": 1224
+        }
+      }
+    ],
+    "finish_reason": "FinishReason.STOP",
+    "model_version": "gemini-3.8-flash",
+    "response_id": "uAT5arDiMqrRjMcP7cSLkQU",
+    "synthetic": false,
+    "non_text_parts": null
+  },
+  "request_status": "ok",
+  "candidate": {
+    "raw_response": "### Analysis\nThe current program uses standard L1 Best Fit: minimizing the sum of residual capacities $(r_{cpu} + r_{mem})$. \n\nThis performs poorly on skewed workloads (`cpu_heavy` at 89.33, `mem_heavy` at 90.33, and `mixed` at 45.00) because it treats residual CPU and residual memory as interchangeable. When a machine is already depleted along its bottleneck dimension (e.g. almost 0 free CPU, but 800 free memory), placing a small CPU, moderate memory job onto it might reduce total residual $(r_{cpu} + r_{mem})$, but it does not change the fact that the machine is stranded by CPU. \n\nCrucially, in vector bin packing, residual capacity along the *tighter* dimension determines whether another job can fit. Leaving a balanced or aligned residual (or aligning the residual capacity with complementary incoming job ratios) maximizes the chance that future jobs fit without opening new bins. \n\nTwo key improvements will reduce bin count:\n1. **Bottleneck / Max-residual focus (Chebyshev / $L_\\infty$ or $L_2$ norm)**: Instead of penalizing $r_{cpu} + r_{mem}$, penalize $\\max(r_{cpu}, r_{mem})$, or a weighted combination that heavily penalizes the maximum residual dimension. When placing a job, leaving 50 CPU and 50 MEM is vastly superior to leaving 0 CPU and 100 MEM, because 100 MEM is stranded capacity that cannot be paired if jobs need both resources.\n2. **Dimension alignment / balance bonus**: Penalize the imbalance $|r_{cpu} - r_{mem}|$ after placement, incentivizing machines to be consumed evenly and preventing stranded single-resource capacity.\n\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Penalize remaining capacity with higher weight on the larger residual dimension\n    and penalize residual imbalance to avoid stranding a single resource.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Minimize both the maximum remaining dimension and total remaining capacity,\n    # plus penalize residual imbalance.\n    max_rem = max(rem_cpu, rem_mem)\n    sum_rem = rem_cpu + rem_mem\n    diff_rem = abs(rem_cpu - rem_mem)\n\n    return -(max_rem * 2.0 + sum_rem * 1.0 + diff_rem * 1.5)\n```",
+    "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Penalize remaining capacity with higher weight on the larger residual dimension\n    and penalize residual imbalance to avoid stranding a single resource.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Minimize both the maximum remaining dimension and total remaining capacity,\n    # plus penalize residual imbalance.\n    max_rem = max(rem_cpu, rem_mem)\n    sum_rem = rem_cpu + rem_mem\n    diff_rem = abs(rem_cpu - rem_mem)\n\n    return -(max_rem * 2.0 + sum_rem * 1.0 + diff_rem * 1.5)\n",
+    "extraction_error": null
+  },
+  "eval": {
+    "per_instance": {
+      "dev-balanced-000": {
+        "machines_used": 32,
+        "residual_cpu": 3019,
+        "residual_mem": 3014,
+        "lower_bound": 29
+      },
+      "dev-balanced-001": {
+        "machines_used": 34,
+        "residual_cpu": 3289,
+        "residual_mem": 3475,
+        "lower_bound": 31
+      },
+      "dev-balanced-002": {
+        "machines_used": 34,
+        "residual_cpu": 3259,
+        "residual_mem": 3308,
+        "lower_bound": 31
+      },
+      "dev-cpu_heavy-000": {
+        "machines_used": 94,
+        "residual_cpu": 26630,
+        "residual_mem": 78631,
+        "lower_bound": 68
+      },
+      "dev-cpu_heavy-001": {
+        "machines_used": 84,
+        "residual_cpu": 22931,
+        "residual_mem": 68420,
+        "lower_bound": 62
+      },
+      "dev-cpu_heavy-002": {
+        "machines_used": 91,
+        "residual_cpu": 25780,
+        "residual_mem": 76416,
+        "lower_bound": 66
+      },
+      "dev-mem_heavy-000": {
+        "machines_used": 93,
+        "residual_cpu": 77156,
+        "residual_mem": 26371,
+        "lower_bound": 67
+      },
+      "dev-mem_heavy-001": {
+        "machines_used": 89,
+        "residual_cpu": 73824,
+        "residual_mem": 23750,
+        "lower_bound": 66
+      },
+      "dev-mem_heavy-002": {
+        "machines_used": 89,
+        "residual_cpu": 74244,
+        "residual_mem": 24386,
+        "lower_bound": 65
+      },
+      "dev-mixed-000": {
+        "machines_used": 45,
+        "residual_cpu": 5000,
+        "residual_mem": 10884,
+        "lower_bound": 40
+      },
+      "dev-mixed-001": {
+        "machines_used": 42,
+        "residual_cpu": 9540,
+        "residual_mem": 6060,
+        "lower_bound": 36
+      },
+      "dev-mixed-002": {
+        "machines_used": 50,
+        "residual_cpu": 14641,
+        "residual_mem": 9312,
+        "lower_bound": 41
+      }
+    },
+    "total_machines": 777,
+    "mean_machines": 64.75,
+    "family_means": {
+      "balanced": 33.333333333333336,
+      "cpu_heavy": 89.66666666666667,
+      "mem_heavy": 90.33333333333333,
+      "mixed": 45.666666666666664
+    },
+    "valid": true,
+    "candidate_id": "9e4920f88916",
+    "normalized_source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Penalize remaining capacity with higher weight on the larger residual dimension\n    and penalize residual imbalance to avoid stranding a single resource.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n    max_rem = max(rem_cpu, rem_mem)\n    sum_rem = rem_cpu + rem_mem\n    diff_rem = abs(rem_cpu - rem_mem)\n    return -(max_rem * 2.0 + sum_rem * 1.0 + diff_rem * 1.5)\n",
+    "eval_seconds": 0.334,
+    "runner": "container"
+  },
+  "improved": false,
+  "incumbent_before": {
+    "candidate_id": "4d1accf86e47",
+    "total_machines": 773
+  },
+  "incumbent_after": {
+    "candidate_id": "4d1accf86e47",
+    "total_machines": 773,
+    "mean_machines": 64.41666666666667,
+    "from_slot": null
+  }
+}

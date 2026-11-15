@@ -1,0 +1,45 @@
+# Main experiment. Freeze this file before the first real (non-pilot) search.
+name: main
+workloads:
+  data_dir: data/main
+  dev_seed: 1001
+  test_seed: 2002
+  dev_instances_per_family: 3     # 12 dev instances
+  test_instances_per_family: 10   # 40 test instances
+  jobs_per_instance: 100
+search:
+  proposals_per_condition: 20
+  replicates: 3                   # 2 x 20 x 3 = 120 proposal slots
+  max_total_attempts: 200         # hard cap on API request attempts, retries included
+  max_retries: 2                  # transient errors only
+  backoff_initial_s: 2.0
+  ordering_seed: 7
+provider:
+  model: gemini-3.8-flash         # exact ID, confirmed via models.list on 2026-11-14
+  api_key_env: GEMINI_API_KEY
+  temperature: 1.0
+  max_output_tokens: 16384        # 4096 hit MAX_TOKENS in live check; 8192 still truncated ~half of pilot01
+  request_timeout_s: 300          # 120 s hit 504 DEADLINE_EXCEEDED with a 16384-token limit
+  thinking_budget: 2048           # respected in diagnostics (2112 used); 4096 was ignored (15724 used)
+  thinking_level: null            # MINIMAL | LOW | MEDIUM | HIGH | XHIGH; null = model default
+pricing:                          # optional; USD per 1M tokens. null => cost reported as unknown
+  as_of: null
+  source: null
+  input_per_million: null
+  output_per_million: null
+  cached_input_per_million: null
+runner:
+  engine: docker                  # or podman
+  image: alphaevolve-mini-eval:0.1
+  timeout_s: 60
+  memory: 256m
+  cpus: 1.0
+  pids_limit: 32
+  tmpfs_size: 16m
+candidate_limits:
+  max_source_chars: 2000
+  max_ast_nodes: 400
+  max_abs_literal: 1000000.0
+  max_abs_exponent: 4.0
+  max_pow_nodes: 4
+runs_dir: runs

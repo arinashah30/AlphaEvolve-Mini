@@ -1,0 +1,112 @@
+{
+  "run_id": "main01",
+  "report_generated_at": "2026-11-15T01:12:46+00:00",
+  "mode": "live",
+  "completion": "complete",
+  "status": "complete",
+  "stop_reason": null,
+  "provider": "gemini",
+  "model": "gemini-3.8-flash",
+  "config_hash": "9c4ee56b6ef96aab",
+  "config": {
+    "name": "main",
+    "workloads": {
+      "data_dir": "data/main",
+      "dev_seed": 1001,
+      "test_seed": 2002,
+      "dev_instances_per_family": 3,
+      "test_instances_per_family": 10,
+      "jobs_per_instance": 100
+    },
+    "search": {
+      "proposals_per_condition": 20,
+      "replicates": 3,
+      "max_total_attempts": 200,
+      "max_retries": 2,
+      "backoff_initial_s": 2.0,
+      "ordering_seed": 7
+    },
+    "provider": {
+      "model": "gemini-3.8-flash",
+      "api_key_env": "GEMINI_API_KEY",
+      "temperature": 1.0,
+      "max_output_tokens": 16384,
+      "request_timeout_s": 300,
+      "thinking_budget": 2048,
+      "thinking_level": null
+    },
+    "pricing": {
+      "as_of": null,
+      "source": null,
+      "input_per_million": null,
+      "output_per_million": null,
+      "cached_input_per_million": null
+    },
+    "runner": {
+      "engine": "docker",
+      "image": "alphaevolve-mini-eval:0.1",
+      "timeout_s": 60,
+      "memory": "256m",
+      "cpus": 1.0,
+      "pids_limit": 32,
+      "tmpfs_size": "16m"
+    },
+    "candidate_limits": {
+      "max_source_chars": 2000,
+      "max_ast_nodes": 400,
+      "max_abs_literal": 1000000.0,
+      "max_abs_exponent": 4.0,
+      "max_pow_nodes": 4
+    },
+    "runs_dir": "runs"
+  },
+  "workload_hash": "0f0416bc229f4dda",
+  "split_hashes": {
+    "dev": "a2d54c2a7383bf8576893faf093299250cfcb410d9a87af2f438eeba9ebe1657",
+    "test": "9b5239474876b82da0235ae4e3d96e62e63b4442e92911f37acdc60137453e65"
+  },
+  "git_commit": "7baf5981e3e7b205b7a644901e3317aaea1b6196",
+  "versions": {
+    "python": "3.12.10",
+    "platform": "macOS-15.3.1-arm64-arm-64bit",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2",
+    "pyyaml": "6.0.3",
+    "google-genai": "3.3.0"
+  },
+  "runner": "container",
+  "condition_order": {
+    "0": [
+      "evolution",
+      "independent"
+    ],
+    "1": [
+      "evolution",
+      "independent"
+    ],
+    "2": [
+      "independent",
+      "evolution"
+    ]
+  },
+  "completed_slots": 120,
+  "total_slots": 120,
+  "request_attempts_sent": 120,
+  "usage_all_attempts": {
+    "attempts": 120,
+    "prompt_tokens": 85595,
+    "output_tokens_incl_thinking": 74204,
+    "attempts_with_unknown_usage": 0,
+    "latency_s_total": 819.043,
+    "est_cost_usd": null
+  },
+  "selection_frozen_at": "2026-11-15T01:12:42+00:00",
+  "test_exposed": true,
+  "finalization": {
+    "status": "complete",
+    "partial": false,
+    "frozen_at": "2026-11-15T01:12:42+00:00",
+    "evaluated_at": "2026-11-15T01:12:45+00:00"
+  },
+  "strict_improvements_logged": 6
+}

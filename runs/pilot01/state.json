@@ -1,0 +1,40 @@
+{
+  "updated_at": "2026-11-15T00:31:00+00:00",
+  "attempts_used": 10,
+  "incumbents": {
+    "0:independent": {
+      "candidate_id": "4d1accf86e47",
+      "from_slot": null,
+      "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Best fit: prefer the machine with the least total residual capacity after placement.\"\"\"\n    return -((free_cpu - job_cpu) + (free_mem - job_mem)) / 1000\n",
+      "eval": {
+        "valid": true,
+        "candidate_id": "4d1accf86e47",
+        "total_machines": 773,
+        "mean_machines": 64.41666666666667,
+        "family_means": {
+          "balanced": 33.0,
+          "cpu_heavy": 89.33333333333333,
+          "mem_heavy": 90.33333333333333,
+          "mixed": 45.0
+        }
+      }
+    },
+    "0:evolution": {
+      "candidate_id": "dc73c3532c65",
+      "from_slot": 1,
+      "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Favor bins that maximize the L2-norm of utilization after placement.\"\"\"\n    new_cpu = 1000 - (free_cpu - job_cpu)\n    new_mem = 1000 - (free_mem - job_mem)\n    return (new_cpu ** 2 + new_mem ** 2) / 1000000\n",
+      "eval": {
+        "valid": true,
+        "candidate_id": "dc73c3532c65",
+        "total_machines": 772,
+        "mean_machines": 64.33333333333333,
+        "family_means": {
+          "balanced": 33.0,
+          "cpu_heavy": 89.0,
+          "mem_heavy": 90.33333333333333,
+          "mixed": 45.0
+        }
+      }
+    }
+  }
+}

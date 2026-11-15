@@ -1,0 +1,17 @@
+# Offline smoke test (mock provider). Never use smoke output as experimental evidence.
+name: smoke
+workloads:
+  data_dir: data/smoke
+  dev_seed: 11
+  test_seed: 22
+  dev_instances_per_family: 1
+  test_instances_per_family: 1
+  jobs_per_instance: 20
+search:
+  proposals_per_condition: 6
+  replicates: 2
+  max_total_attempts: 40
+  ordering_seed: 7
+runner:
+  timeout_s: 30
+runs_dir: runs

@@ -1,0 +1,40 @@
+{
+  "updated_at": "2026-11-15T00:55:24+00:00",
+  "attempts_used": 10,
+  "incumbents": {
+    "0:independent": {
+      "candidate_id": "4d1accf86e47",
+      "from_slot": null,
+      "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Best fit: prefer the machine with the least total residual capacity after placement.\"\"\"\n    return -((free_cpu - job_cpu) + (free_mem - job_mem)) / 1000\n",
+      "eval": {
+        "valid": true,
+        "candidate_id": "4d1accf86e47",
+        "total_machines": 773,
+        "mean_machines": 64.41666666666667,
+        "family_means": {
+          "balanced": 33.0,
+          "cpu_heavy": 89.33333333333333,
+          "mem_heavy": 90.33333333333333,
+          "mixed": 45.0
+        }
+      }
+    },
+    "0:evolution": {
+      "candidate_id": "f2386dad9ed8",
+      "from_slot": 4,
+      "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Total remaining capacity after placement (smaller is better -> higher score)\n    sum_rem = rem_cpu + rem_mem\n\n    # Bottleneck residual: leaving near-zero in either dimension fully packs that bin\n    min_rem = min(rem_cpu, rem_mem)\n\n    # Tightness bonus: strongly prefer placements that leave very little residual on any dimension\n    tightness = 0.0\n    if rem_cpu < 50:\n        tightness = tightness + (50 - rem_cpu) * 4.0\n    if rem_mem < 50:\n        tightness = tightness + (50 - rem_mem) * 4.0\n\n    # Alignment / Complementarity: measure how well the job consumes the dominant free resource.\n    # We reward reducing the gap between free_cpu and free_mem (i.e. bringing residual closer to 0).\n    imbalance_reduction = abs(free_cpu - free_mem) - abs(rem_cpu - rem_mem)\n\n    # Base score is driven by minimizing remaining space and bottleneck, boosted by alignment & tightness\n    return -(1.5 * sum_rem + 2.0 * min_rem) + 1.2 * imbalance_reduction + tightness\n",
+      "eval": {
+        "valid": true,
+        "candidate_id": "f2386dad9ed8",
+        "total_machines": 771,
+        "mean_machines": 64.25,
+        "family_means": {
+          "balanced": 33.0,
+          "cpu_heavy": 89.0,
+          "mem_heavy": 90.33333333333333,
+          "mixed": 44.666666666666664
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,184 @@
+{
+  "run_id": "pilot02",
+  "created_at": "2026-11-15T00:45:44+00:00",
+  "provider": "gemini",
+  "live": true,
+  "model": "gemini-3.8-flash",
+  "data_kind": "live",
+  "config_name": "pilot",
+  "config_source": "configs/pilot.yaml",
+  "config_hash": "83ad566d9fea62c6",
+  "config": {
+    "name": "pilot",
+    "workloads": {
+      "data_dir": "data/main",
+      "dev_seed": 1001,
+      "test_seed": 2002,
+      "dev_instances_per_family": 3,
+      "test_instances_per_family": 10,
+      "jobs_per_instance": 100
+    },
+    "search": {
+      "proposals_per_condition": 5,
+      "replicates": 1,
+      "max_total_attempts": 20,
+      "max_retries": 2,
+      "backoff_initial_s": 2.0,
+      "ordering_seed": 7
+    },
+    "provider": {
+      "model": "gemini-3.8-flash",
+      "api_key_env": "GEMINI_API_KEY",
+      "temperature": 1.0,
+      "max_output_tokens": 16384,
+      "request_timeout_s": 300,
+      "thinking_budget": 2048,
+      "thinking_level": null
+    },
+    "pricing": {
+      "as_of": null,
+      "source": null,
+      "input_per_million": null,
+      "output_per_million": null,
+      "cached_input_per_million": null
+    },
+    "runner": {
+      "engine": "docker",
+      "image": "alphaevolve-mini-eval:0.1",
+      "timeout_s": 60,
+      "memory": "256m",
+      "cpus": 1.0,
+      "pids_limit": 32,
+      "tmpfs_size": "16m"
+    },
+    "candidate_limits": {
+      "max_source_chars": 2000,
+      "max_ast_nodes": 400,
+      "max_abs_literal": 1000000.0,
+      "max_abs_exponent": 4.0,
+      "max_pow_nodes": 4
+    },
+    "runs_dir": "runs"
+  },
+  "workload_hash": "0f0416bc229f4dda",
+  "split_hashes": {
+    "dev": "a2d54c2a7383bf8576893faf093299250cfcb410d9a87af2f438eeba9ebe1657",
+    "test": "9b5239474876b82da0235ae4e3d96e62e63b4442e92911f37acdc60137453e65"
+  },
+  "git_commit": "f17c5d9402aff867974a426fa8c4a892567d5e9d-dirty",
+  "versions": {
+    "python": "3.12.10",
+    "platform": "macOS-15.3.1-arm64-arm-64bit",
+    "numpy": "2.5.4",
+    "matplotlib": "3.11.2",
+    "pyyaml": "6.0.3",
+    "google-genai": "3.3.0"
+  },
+  "runner": "container",
+  "condition_order": {
+    "0": [
+      "evolution",
+      "independent"
+    ]
+  },
+  "total_slots": 10,
+  "status": "complete",
+  "stop_reason": null,
+  "test_exposed": false,
+  "initial": {
+    "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Best fit: prefer the machine with the least total residual capacity after placement.\"\"\"\n    return -((free_cpu - job_cpu) + (free_mem - job_mem)) / 1000\n",
+    "candidate_id": "4d1accf86e47",
+    "eval": {
+      "per_instance": {
+        "dev-balanced-000": {
+          "machines_used": 31,
+          "residual_cpu": 2019,
+          "residual_mem": 2014,
+          "lower_bound": 29
+        },
+        "dev-balanced-001": {
+          "machines_used": 34,
+          "residual_cpu": 3289,
+          "residual_mem": 3475,
+          "lower_bound": 31
+        },
+        "dev-balanced-002": {
+          "machines_used": 34,
+          "residual_cpu": 3259,
+          "residual_mem": 3308,
+          "lower_bound": 31
+        },
+        "dev-cpu_heavy-000": {
+          "machines_used": 94,
+          "residual_cpu": 26630,
+          "residual_mem": 78631,
+          "lower_bound": 68
+        },
+        "dev-cpu_heavy-001": {
+          "machines_used": 83,
+          "residual_cpu": 21931,
+          "residual_mem": 67420,
+          "lower_bound": 62
+        },
+        "dev-cpu_heavy-002": {
+          "machines_used": 91,
+          "residual_cpu": 25780,
+          "residual_mem": 76416,
+          "lower_bound": 66
+        },
+        "dev-mem_heavy-000": {
+          "machines_used": 93,
+          "residual_cpu": 77156,
+          "residual_mem": 26371,
+          "lower_bound": 67
+        },
+        "dev-mem_heavy-001": {
+          "machines_used": 89,
+          "residual_cpu": 73824,
+          "residual_mem": 23750,
+          "lower_bound": 66
+        },
+        "dev-mem_heavy-002": {
+          "machines_used": 89,
+          "residual_cpu": 74244,
+          "residual_mem": 24386,
+          "lower_bound": 65
+        },
+        "dev-mixed-000": {
+          "machines_used": 45,
+          "residual_cpu": 5000,
+          "residual_mem": 10884,
+          "lower_bound": 40
+        },
+        "dev-mixed-001": {
+          "machines_used": 42,
+          "residual_cpu": 9540,
+          "residual_mem": 6060,
+          "lower_bound": 36
+        },
+        "dev-mixed-002": {
+          "machines_used": 48,
+          "residual_cpu": 12641,
+          "residual_mem": 7312,
+          "lower_bound": 41
+        }
+      },
+      "total_machines": 773,
+      "mean_machines": 64.41666666666667,
+      "family_means": {
+        "balanced": 33.0,
+        "cpu_heavy": 89.33333333333333,
+        "mem_heavy": 90.33333333333333,
+        "mixed": 45.0
+      },
+      "valid": true,
+      "candidate_id": "4d1accf86e47",
+      "normalized_source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Best fit: prefer the machine with the least total residual capacity after placement.\"\"\"\n    return -(free_cpu - job_cpu + (free_mem - job_mem)) / 1000\n",
+      "eval_seconds": 0.506,
+      "runner": "container"
+    },
+    "feedback": "Status: valid.\nMean machines used (all development instances): 64.417\nMean machines used per family:\n  balanced: 33.000\n  cpu_heavy: 89.333\n  mem_heavy: 90.333\n  mixed: 45.000"
+  },
+  "attempts_used": 10,
+  "completed_slots": 10
+}

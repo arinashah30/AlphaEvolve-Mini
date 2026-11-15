@@ -1,0 +1,145 @@
+{
+  "replicate": 0,
+  "condition": "evolution",
+  "slot": 19,
+  "global_index": 38,
+  "completed_at": "2026-11-15T01:02:41+00:00",
+  "synthetic": false,
+  "parent_candidate_id": "a47ce4c0fb61",
+  "prompt": "You are improving a heuristic for online two-dimensional bin packing (a simplified machine-placement problem).\n\nTask rules (enforced by a trusted evaluator you cannot change):\n- Every machine has CPU capacity 1000 and memory capacity 1000 (integer units).\n- Jobs arrive one at a time in a fixed order and never leave. Each job has integer job_cpu and job_mem demands.\n- For each job, the evaluator calls your function once for every EXISTING machine that can fit the job, passing that machine's current free_cpu and free_mem (before placement).\n- The job goes to the machine with the highest score; ties go to the earliest-created machine.\n- If no existing machine fits, a new machine is opened without calling your function.\n\nObjective: minimize the mean number of machines used across the development workloads (lower is better).\nWorkload families: balanced (similar CPU and memory demand), cpu_heavy, mem_heavy, and mixed (each job drawn from one of the other three families).\n\nProgram constraints (programs that violate them are rejected and still count as an attempt):\n- Define exactly one function: def score(job_cpu, job_mem, free_cpu, free_mem):\n- Return a finite int or float (not a bool).\n- Allowed: arithmetic (+ - * / // % **), comparisons, and/or/not, if statements, conditional expressions, simple local variable assignments, return statements, and calls to abs, min and max.\n- Exponents must be numeric literals with magnitude at most 4. Numeric literals must have magnitude at most 1e+06.\n- Not allowed: imports, attribute access, indexing, loops, comprehensions, nested functions, lambdas, global/nonlocal, decorators, strings other than a docstring, or calls to anything except abs/min/max.\n- Keep the source under 2000 characters.\n\n### CURRENT PROGRAM BEGIN\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Favor machines that are fuller (higher used capacity)\n    used_cpu = 1000 - rem_cpu\n    used_mem = 1000 - rem_mem\n\n    # Alignment / Dot product between job demand and free capacity:\n    # A job should be placed where its dominant resource matches the machine's dominant free resource.\n    # We normalize scale by 1000.\n    alignment = (job_cpu * free_cpu + job_mem * free_mem) / 1000.0\n\n    # Bottleneck tightness: measure how tightly the critical dimension fits\n    tightness = min(rem_cpu, rem_mem)\n\n    # Score:\n    # 1. Primary: Strongly favor fuller machines (used_cpu + used_mem)\n    # 2. Secondary: Good alignment of demand to available resource\n    # 3. Tertiary: Prefer smaller remaining bottleneck (tightness)\n    return (used_cpu + used_mem) * 2.0 + alignment - tightness * 1.5\n```\n### CURRENT PROGRAM END\n\nEvaluation feedback for the current program:\nStatus: valid.\nMean machines used (all development instances): 64.250\nMean machines used per family:\n  balanced: 33.000\n  cpu_heavy: 89.000\n  mem_heavy: 90.333\n  mixed: 44.667\n\nPropose one improved version of the score function that you expect to use fewer machines.\nFirst, write a short analysis (up to about 250 words): using the feedback above, explain why the current program wastes machines, especially on the families with the most machines, and what placement behaviour would reduce that.\nThen give exactly one ```python code block containing the complete improved function.\n",
+  "response": {
+    "ok": true,
+    "fatal": false,
+    "text": "### Analysis\n\nIn online vector bin packing (such as packing 2D CPU and Memory resources), the major source of waste in skewed workloads (`cpu_heavy` at 89.0 and `mem_heavy` at 90.333 machines) is resource imbalance and strandings. \n\nThe current scoring heuristic uses `alignment = (job_cpu * free_cpu + job_mem * free_mem)`, which positively reinforces placing dominant demand into dominant free space. While intuitive in some settings, for skewed workloads this directly causes machines to become severely unbalanced (e.g., draining all CPU while leaving memory stranded and unusable, or vice versa). Furthermore, `tightness = min(rem_cpu, rem_mem)` only considers the smaller remaining dimension, ignoring how much the larger dimension is stranded.\n\nTo minimize machine count:\n1. **Balance post-placement remaining resources**: The remaining resources `rem_cpu` and `rem_mem` should be as close to each other as possible, minimizing `abs(rem_cpu - rem_mem)`. When a machine's remaining capacities are balanced, future jobs of any type (or complementary jobs) can still fit.\n2. **Best-Fit / Minimize remaining volume**: Pack jobs tightly into machines that are already fullest, minimizing `rem_cpu + rem_mem` (or equivalently maximizing post-placement utilization `used_cpu + used_mem`).\n3. **Severe penalty for stranded slack**: Penalize `abs(rem_cpu - rem_mem)` heavily, particularly relative to total remaining capacity, so complementary jobs are paired together and skewed jobs do not exhaust one dimension prematurely.\n\n### Improved Program\n\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Total remaining space (lower is better, so we negate or maximize used)\n    used_cpu = 1000 - rem_cpu\n    used_mem = 1000 - rem_mem\n    total_used = used_cpu + used_mem\n\n    # Balance penalty: penalize disparity in remaining free resources to avoid stranding\n    imbalance = abs(rem_cpu - rem_mem)\n\n    # Primary goal: Fill bins as much as possible (Best Fit)\n    # Secondary goal: Keep residual capacity balanced (minimizes stranded resources)\n    # Tertiary goal: Minimize the minimum remaining dimension if both fit snugly\n    return total_used * 3.0 - imbalance * 2.0 - (rem_cpu + rem_mem) * 0.5\n```",
+    "attempts": [
+      {
+        "attempt": 1,
+        "status": "ok",
+        "started_at": 1794704555.553681,
+        "latency_s": 5.686418333090842,
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "usage": {
+          "prompt_token_count": 869,
+          "candidates_token_count": 571,
+          "thoughts_token_count": null,
+          "cached_content_token_count": null,
+          "tool_use_prompt_token_count": null,
+          "total_token_count": 1440
+        }
+      }
+    ],
+    "finish_reason": "FinishReason.STOP",
+    "model_version": "gemini-3.8-flash",
+    "response_id": "qwT5auGjKZXO_uMP7KD02A4",
+    "synthetic": false,
+    "non_text_parts": null
+  },
+  "request_status": "ok",
+  "candidate": {
+    "raw_response": "### Analysis\n\nIn online vector bin packing (such as packing 2D CPU and Memory resources), the major source of waste in skewed workloads (`cpu_heavy` at 89.0 and `mem_heavy` at 90.333 machines) is resource imbalance and strandings. \n\nThe current scoring heuristic uses `alignment = (job_cpu * free_cpu + job_mem * free_mem)`, which positively reinforces placing dominant demand into dominant free space. While intuitive in some settings, for skewed workloads this directly causes machines to become severely unbalanced (e.g., draining all CPU while leaving memory stranded and unusable, or vice versa). Furthermore, `tightness = min(rem_cpu, rem_mem)` only considers the smaller remaining dimension, ignoring how much the larger dimension is stranded.\n\nTo minimize machine count:\n1. **Balance post-placement remaining resources**: The remaining resources `rem_cpu` and `rem_mem` should be as close to each other as possible, minimizing `abs(rem_cpu - rem_mem)`. When a machine's remaining capacities are balanced, future jobs of any type (or complementary jobs) can still fit.\n2. **Best-Fit / Minimize remaining volume**: Pack jobs tightly into machines that are already fullest, minimizing `rem_cpu + rem_mem` (or equivalently maximizing post-placement utilization `used_cpu + used_mem`).\n3. **Severe penalty for stranded slack**: Penalize `abs(rem_cpu - rem_mem)` heavily, particularly relative to total remaining capacity, so complementary jobs are paired together and skewed jobs do not exhaust one dimension prematurely.\n\n### Improved Program\n\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Total remaining space (lower is better, so we negate or maximize used)\n    used_cpu = 1000 - rem_cpu\n    used_mem = 1000 - rem_mem\n    total_used = used_cpu + used_mem\n\n    # Balance penalty: penalize disparity in remaining free resources to avoid stranding\n    imbalance = abs(rem_cpu - rem_mem)\n\n    # Primary goal: Fill bins as much as possible (Best Fit)\n    # Secondary goal: Keep residual capacity balanced (minimizes stranded resources)\n    # Tertiary goal: Minimize the minimum remaining dimension if both fit snugly\n    return total_used * 3.0 - imbalance * 2.0 - (rem_cpu + rem_mem) * 0.5\n```",
+    "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Total remaining space (lower is better, so we negate or maximize used)\n    used_cpu = 1000 - rem_cpu\n    used_mem = 1000 - rem_mem\n    total_used = used_cpu + used_mem\n\n    # Balance penalty: penalize disparity in remaining free resources to avoid stranding\n    imbalance = abs(rem_cpu - rem_mem)\n\n    # Primary goal: Fill bins as much as possible (Best Fit)\n    # Secondary goal: Keep residual capacity balanced (minimizes stranded resources)\n    # Tertiary goal: Minimize the minimum remaining dimension if both fit snugly\n    return total_used * 3.0 - imbalance * 2.0 - (rem_cpu + rem_mem) * 0.5\n",
+    "extraction_error": null
+  },
+  "eval": {
+    "per_instance": {
+      "dev-balanced-000": {
+        "machines_used": 32,
+        "residual_cpu": 3019,
+        "residual_mem": 3014,
+        "lower_bound": 29
+      },
+      "dev-balanced-001": {
+        "machines_used": 34,
+        "residual_cpu": 3289,
+        "residual_mem": 3475,
+        "lower_bound": 31
+      },
+      "dev-balanced-002": {
+        "machines_used": 34,
+        "residual_cpu": 3259,
+        "residual_mem": 3308,
+        "lower_bound": 31
+      },
+      "dev-cpu_heavy-000": {
+        "machines_used": 94,
+        "residual_cpu": 26630,
+        "residual_mem": 78631,
+        "lower_bound": 68
+      },
+      "dev-cpu_heavy-001": {
+        "machines_used": 84,
+        "residual_cpu": 22931,
+        "residual_mem": 68420,
+        "lower_bound": 62
+      },
+      "dev-cpu_heavy-002": {
+        "machines_used": 91,
+        "residual_cpu": 25780,
+        "residual_mem": 76416,
+        "lower_bound": 66
+      },
+      "dev-mem_heavy-000": {
+        "machines_used": 93,
+        "residual_cpu": 77156,
+        "residual_mem": 26371,
+        "lower_bound": 67
+      },
+      "dev-mem_heavy-001": {
+        "machines_used": 89,
+        "residual_cpu": 73824,
+        "residual_mem": 23750,
+        "lower_bound": 66
+      },
+      "dev-mem_heavy-002": {
+        "machines_used": 89,
+        "residual_cpu": 74244,
+        "residual_mem": 24386,
+        "lower_bound": 65
+      },
+      "dev-mixed-000": {
+        "machines_used": 45,
+        "residual_cpu": 5000,
+        "residual_mem": 10884,
+        "lower_bound": 40
+      },
+      "dev-mixed-001": {
+        "machines_used": 42,
+        "residual_cpu": 9540,
+        "residual_mem": 6060,
+        "lower_bound": 36
+      },
+      "dev-mixed-002": {
+        "machines_used": 48,
+        "residual_cpu": 12641,
+        "residual_mem": 7312,
+        "lower_bound": 41
+      }
+    },
+    "total_machines": 775,
+    "mean_machines": 64.58333333333333,
+    "family_means": {
+      "balanced": 33.333333333333336,
+      "cpu_heavy": 89.66666666666667,
+      "mem_heavy": 90.33333333333333,
+      "mixed": 45.0
+    },
+    "valid": true,
+    "candidate_id": "af72ceb02afd",
+    "normalized_source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n    used_cpu = 1000 - rem_cpu\n    used_mem = 1000 - rem_mem\n    total_used = used_cpu + used_mem\n    imbalance = abs(rem_cpu - rem_mem)\n    return total_used * 3.0 - imbalance * 2.0 - (rem_cpu + rem_mem) * 0.5\n",
+    "eval_seconds": 0.329,
+    "runner": "container"
+  },
+  "improved": false,
+  "incumbent_before": {
+    "candidate_id": "a47ce4c0fb61",
+    "total_machines": 771
+  },
+  "incumbent_after": {
+    "candidate_id": "a47ce4c0fb61",
+    "total_machines": 771,
+    "mean_machines": 64.25,
+    "from_slot": 5
+  }
+}

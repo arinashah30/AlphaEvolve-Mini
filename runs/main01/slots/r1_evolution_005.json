@@ -1,0 +1,145 @@
+{
+  "replicate": 1,
+  "condition": "evolution",
+  "slot": 5,
+  "global_index": 50,
+  "completed_at": "2026-11-15T01:04:03+00:00",
+  "synthetic": false,
+  "parent_candidate_id": "4d1accf86e47",
+  "prompt": "You are improving a heuristic for online two-dimensional bin packing (a simplified machine-placement problem).\n\nTask rules (enforced by a trusted evaluator you cannot change):\n- Every machine has CPU capacity 1000 and memory capacity 1000 (integer units).\n- Jobs arrive one at a time in a fixed order and never leave. Each job has integer job_cpu and job_mem demands.\n- For each job, the evaluator calls your function once for every EXISTING machine that can fit the job, passing that machine's current free_cpu and free_mem (before placement).\n- The job goes to the machine with the highest score; ties go to the earliest-created machine.\n- If no existing machine fits, a new machine is opened without calling your function.\n\nObjective: minimize the mean number of machines used across the development workloads (lower is better).\nWorkload families: balanced (similar CPU and memory demand), cpu_heavy, mem_heavy, and mixed (each job drawn from one of the other three families).\n\nProgram constraints (programs that violate them are rejected and still count as an attempt):\n- Define exactly one function: def score(job_cpu, job_mem, free_cpu, free_mem):\n- Return a finite int or float (not a bool).\n- Allowed: arithmetic (+ - * / // % **), comparisons, and/or/not, if statements, conditional expressions, simple local variable assignments, return statements, and calls to abs, min and max.\n- Exponents must be numeric literals with magnitude at most 4. Numeric literals must have magnitude at most 1e+06.\n- Not allowed: imports, attribute access, indexing, loops, comprehensions, nested functions, lambdas, global/nonlocal, decorators, strings other than a docstring, or calls to anything except abs/min/max.\n- Keep the source under 2000 characters.\n\n### CURRENT PROGRAM BEGIN\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Best fit: prefer the machine with the least total residual capacity after placement.\"\"\"\n    return -((free_cpu - job_cpu) + (free_mem - job_mem)) / 1000\n```\n### CURRENT PROGRAM END\n\nEvaluation feedback for the current program:\nStatus: valid.\nMean machines used (all development instances): 64.417\nMean machines used per family:\n  balanced: 33.000\n  cpu_heavy: 89.333\n  mem_heavy: 90.333\n  mixed: 45.000\n\nPropose one improved version of the score function that you expect to use fewer machines.\nFirst, write a short analysis (up to about 250 words): using the feedback above, explain why the current program wastes machines, especially on the families with the most machines, and what placement behaviour would reduce that.\nThen give exactly one ```python code block containing the complete improved function.\n",
+  "response": {
+    "ok": true,
+    "fatal": false,
+    "text": "### Analysis\nThe current program uses sum of residual capacities (L1 best-fit): `-(rem_cpu + rem_mem)`. While effective for balanced workloads, it performs poorly on skewed workloads (`cpu_heavy`: 89.333, `mem_heavy`: 90.333) and `mixed` workloads (45.000).\n\nThe primary cause of inefficiency in vector bin packing is multidimensional capacity imbalance:\n1. **Bottleneck alignment & balance matching**: In vector packing, a machine is exhausted when *either* CPU or memory is depleted. If a CPU-heavy job is placed on a machine that already has little CPU remaining but plenty of memory, memory is stranded and wasted. Conversely, placing a CPU-heavy job into a machine with surplus CPU balances the machine.\n2. **Residual alignment**: A well-packed machine should either have both resources tightly packed (`rem_cpu \u2248 0` and `rem_mem \u2248 0`) or preserve balanced residual space for future complementary jobs. Penalizing the absolute difference between residual capacities `abs(rem_cpu - rem_mem)` encourages balanced consumption of the machine's capacity.\n3. **Dot product / Cosine alignment**: Dot-product-based heuristics (like Norm-based Greedy / Dot-Product heuristic) reward placing jobs into bins whose remaining capacity ratio matches the job's requirement ratio, or minimizing the L2 norm / bottleneck dimension `max(rem_cpu, rem_mem)` rather than just the L1 sum.\n\nTherefore, an effective scoring function should minimize total residual space while heavily penalizing stranded capacity (e.g., `max(rem_cpu, rem_mem)` or `abs(rem_cpu - rem_mem)`). Minimizing `(rem_cpu + rem_mem) + 0.5 * abs(rem_cpu - rem_mem)` (or equivalently penalizing `rem_cpu + rem_mem + max(rem_cpu, rem_mem)`) guides the online packer to prevent stranding single dimensions.\n\n### Improved Program\n\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Score machine by minimizing residual waste and imbalance.\n    Penalizing both total residual capacity and the bottleneck residual dimension\n    prevents stranding unused capacity in skewed and mixed workloads.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Total residual capacity + bottleneck penalty\n    # Maximizing score <=> minimizing rem_cpu + rem_mem + max(rem_cpu, rem_mem)\n    bottleneck = max(rem_cpu, rem_mem)\n    return -(rem_cpu + rem_mem + 1.5 * bottleneck)\n```",
+    "attempts": [
+      {
+        "attempt": 1,
+        "status": "ok",
+        "started_at": 1794704636.506886,
+        "latency_s": 6.699214625172317,
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "usage": {
+          "prompt_token_count": 658,
+          "candidates_token_count": 600,
+          "thoughts_token_count": null,
+          "cached_content_token_count": null,
+          "tool_use_prompt_token_count": null,
+          "total_token_count": 1258
+        }
+      }
+    ],
+    "finish_reason": "FinishReason.STOP",
+    "model_version": "gemini-3.8-flash",
+    "response_id": "_AT5auuvJaS-39IP5ZvboQw",
+    "synthetic": false,
+    "non_text_parts": null
+  },
+  "request_status": "ok",
+  "candidate": {
+    "raw_response": "### Analysis\nThe current program uses sum of residual capacities (L1 best-fit): `-(rem_cpu + rem_mem)`. While effective for balanced workloads, it performs poorly on skewed workloads (`cpu_heavy`: 89.333, `mem_heavy`: 90.333) and `mixed` workloads (45.000).\n\nThe primary cause of inefficiency in vector bin packing is multidimensional capacity imbalance:\n1. **Bottleneck alignment & balance matching**: In vector packing, a machine is exhausted when *either* CPU or memory is depleted. If a CPU-heavy job is placed on a machine that already has little CPU remaining but plenty of memory, memory is stranded and wasted. Conversely, placing a CPU-heavy job into a machine with surplus CPU balances the machine.\n2. **Residual alignment**: A well-packed machine should either have both resources tightly packed (`rem_cpu \u2248 0` and `rem_mem \u2248 0`) or preserve balanced residual space for future complementary jobs. Penalizing the absolute difference between residual capacities `abs(rem_cpu - rem_mem)` encourages balanced consumption of the machine's capacity.\n3. **Dot product / Cosine alignment**: Dot-product-based heuristics (like Norm-based Greedy / Dot-Product heuristic) reward placing jobs into bins whose remaining capacity ratio matches the job's requirement ratio, or minimizing the L2 norm / bottleneck dimension `max(rem_cpu, rem_mem)` rather than just the L1 sum.\n\nTherefore, an effective scoring function should minimize total residual space while heavily penalizing stranded capacity (e.g., `max(rem_cpu, rem_mem)` or `abs(rem_cpu - rem_mem)`). Minimizing `(rem_cpu + rem_mem) + 0.5 * abs(rem_cpu - rem_mem)` (or equivalently penalizing `rem_cpu + rem_mem + max(rem_cpu, rem_mem)`) guides the online packer to prevent stranding single dimensions.\n\n### Improved Program\n\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Score machine by minimizing residual waste and imbalance.\n    Penalizing both total residual capacity and the bottleneck residual dimension\n    prevents stranding unused capacity in skewed and mixed workloads.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Total residual capacity + bottleneck penalty\n    # Maximizing score <=> minimizing rem_cpu + rem_mem + max(rem_cpu, rem_mem)\n    bottleneck = max(rem_cpu, rem_mem)\n    return -(rem_cpu + rem_mem + 1.5 * bottleneck)\n```",
+    "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Score machine by minimizing residual waste and imbalance.\n    Penalizing both total residual capacity and the bottleneck residual dimension\n    prevents stranding unused capacity in skewed and mixed workloads.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Total residual capacity + bottleneck penalty\n    # Maximizing score <=> minimizing rem_cpu + rem_mem + max(rem_cpu, rem_mem)\n    bottleneck = max(rem_cpu, rem_mem)\n    return -(rem_cpu + rem_mem + 1.5 * bottleneck)\n",
+    "extraction_error": null
+  },
+  "eval": {
+    "per_instance": {
+      "dev-balanced-000": {
+        "machines_used": 32,
+        "residual_cpu": 3019,
+        "residual_mem": 3014,
+        "lower_bound": 29
+      },
+      "dev-balanced-001": {
+        "machines_used": 34,
+        "residual_cpu": 3289,
+        "residual_mem": 3475,
+        "lower_bound": 31
+      },
+      "dev-balanced-002": {
+        "machines_used": 34,
+        "residual_cpu": 3259,
+        "residual_mem": 3308,
+        "lower_bound": 31
+      },
+      "dev-cpu_heavy-000": {
+        "machines_used": 94,
+        "residual_cpu": 26630,
+        "residual_mem": 78631,
+        "lower_bound": 68
+      },
+      "dev-cpu_heavy-001": {
+        "machines_used": 84,
+        "residual_cpu": 22931,
+        "residual_mem": 68420,
+        "lower_bound": 62
+      },
+      "dev-cpu_heavy-002": {
+        "machines_used": 91,
+        "residual_cpu": 25780,
+        "residual_mem": 76416,
+        "lower_bound": 66
+      },
+      "dev-mem_heavy-000": {
+        "machines_used": 93,
+        "residual_cpu": 77156,
+        "residual_mem": 26371,
+        "lower_bound": 67
+      },
+      "dev-mem_heavy-001": {
+        "machines_used": 89,
+        "residual_cpu": 73824,
+        "residual_mem": 23750,
+        "lower_bound": 66
+      },
+      "dev-mem_heavy-002": {
+        "machines_used": 89,
+        "residual_cpu": 74244,
+        "residual_mem": 24386,
+        "lower_bound": 65
+      },
+      "dev-mixed-000": {
+        "machines_used": 45,
+        "residual_cpu": 5000,
+        "residual_mem": 10884,
+        "lower_bound": 40
+      },
+      "dev-mixed-001": {
+        "machines_used": 42,
+        "residual_cpu": 9540,
+        "residual_mem": 6060,
+        "lower_bound": 36
+      },
+      "dev-mixed-002": {
+        "machines_used": 48,
+        "residual_cpu": 12641,
+        "residual_mem": 7312,
+        "lower_bound": 41
+      }
+    },
+    "total_machines": 775,
+    "mean_machines": 64.58333333333333,
+    "family_means": {
+      "balanced": 33.333333333333336,
+      "cpu_heavy": 89.66666666666667,
+      "mem_heavy": 90.33333333333333,
+      "mixed": 45.0
+    },
+    "valid": true,
+    "candidate_id": "1aabd0041f55",
+    "normalized_source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Score machine by minimizing residual waste and imbalance.\n    Penalizing both total residual capacity and the bottleneck residual dimension\n    prevents stranding unused capacity in skewed and mixed workloads.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n    bottleneck = max(rem_cpu, rem_mem)\n    return -(rem_cpu + rem_mem + 1.5 * bottleneck)\n",
+    "eval_seconds": 0.421,
+    "runner": "container"
+  },
+  "improved": false,
+  "incumbent_before": {
+    "candidate_id": "4d1accf86e47",
+    "total_machines": 773
+  },
+  "incumbent_after": {
+    "candidate_id": "4d1accf86e47",
+    "total_machines": 773,
+    "mean_machines": 64.41666666666667,
+    "from_slot": null
+  }
+}

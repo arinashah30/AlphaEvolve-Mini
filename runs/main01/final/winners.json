@@ -1,0 +1,106 @@
+{
+  "run_id": "main01",
+  "frozen_at": "2026-11-15T01:12:42+00:00",
+  "partial": false,
+  "selection_rule": "lowest total development machines (valid only, initial included); earliest on ties",
+  "completed_slots": 120,
+  "total_slots": 120,
+  "winners": {
+    "0:independent": {
+      "candidate_id": "4d1accf86e47",
+      "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Best fit: prefer the machine with the least total residual capacity after placement.\"\"\"\n    return -((free_cpu - job_cpu) + (free_mem - job_mem)) / 1000\n",
+      "from_slot": null,
+      "dev": {
+        "total_machines": 773,
+        "mean_machines": 64.41666666666667,
+        "family_means": {
+          "balanced": 33.0,
+          "cpu_heavy": 89.33333333333333,
+          "mem_heavy": 90.33333333333333,
+          "mixed": 45.0
+        }
+      },
+      "completed_slots": 20
+    },
+    "0:evolution": {
+      "candidate_id": "a47ce4c0fb61",
+      "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Favor machines that are fuller (higher used capacity)\n    used_cpu = 1000 - rem_cpu\n    used_mem = 1000 - rem_mem\n\n    # Alignment / Dot product between job demand and free capacity:\n    # A job should be placed where its dominant resource matches the machine's dominant free resource.\n    # We normalize scale by 1000.\n    alignment = (job_cpu * free_cpu + job_mem * free_mem) / 1000.0\n\n    # Bottleneck tightness: measure how tightly the critical dimension fits\n    tightness = min(rem_cpu, rem_mem)\n\n    # Score:\n    # 1. Primary: Strongly favor fuller machines (used_cpu + used_mem)\n    # 2. Secondary: Good alignment of demand to available resource\n    # 3. Tertiary: Prefer smaller remaining bottleneck (tightness)\n    return (used_cpu + used_mem) * 2.0 + alignment - tightness * 1.5\n",
+      "from_slot": 5,
+      "dev": {
+        "total_machines": 771,
+        "mean_machines": 64.25,
+        "family_means": {
+          "balanced": 33.0,
+          "cpu_heavy": 89.0,
+          "mem_heavy": 90.33333333333333,
+          "mixed": 44.666666666666664
+        }
+      },
+      "completed_slots": 20
+    },
+    "1:independent": {
+      "candidate_id": "37abe43e17d5",
+      "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Score placing a job on a candidate machine.\n    Prioritizes minimizing the bottleneck residual capacity while\n    encouraging balance between remaining CPU and memory.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Minimize remaining capacity, heavily penalizing the tighter dimension\n    # and residual imbalance.\n    tight_res = min(rem_cpu, rem_mem)\n    sum_res = rem_cpu + rem_mem\n    diff_res = abs(rem_cpu - rem_mem)\n\n    # Lower residuals and lower imbalance give higher score\n    return -(sum_res + 2.0 * tight_res + 0.5 * diff_res)\n",
+      "from_slot": 1,
+      "dev": {
+        "total_machines": 772,
+        "mean_machines": 64.33333333333333,
+        "family_means": {
+          "balanced": 33.0,
+          "cpu_heavy": 89.0,
+          "mem_heavy": 90.33333333333333,
+          "mixed": 45.0
+        }
+      },
+      "completed_slots": 20
+    },
+    "1:evolution": {
+      "candidate_id": "ea15198a8e67",
+      "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Multi-dimensional best-fit with imbalance penalty.\n    Minimizes residual capacity while heavily prioritizing the tighter dimension\n    and penalizing residual dimension disparity.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Total residual and bottleneck (minimum remaining) residual\n    total_rem = rem_cpu + rem_mem\n    min_rem = min(rem_cpu, rem_mem)\n    imbalance = abs(rem_cpu - rem_mem)\n\n    # Heavily reward exhausting the tighter resource (small min_rem),\n    # reward packing efficiency (small total_rem), and reward balance.\n    # Scaled negatively so higher score = better fit.\n    return -(total_rem + 2.0 * min_rem + 0.5 * imbalance)\n",
+      "from_slot": 9,
+      "dev": {
+        "total_machines": 772,
+        "mean_machines": 64.33333333333333,
+        "family_means": {
+          "balanced": 33.0,
+          "cpu_heavy": 89.0,
+          "mem_heavy": 90.33333333333333,
+          "mixed": 45.0
+        }
+      },
+      "completed_slots": 20
+    },
+    "2:independent": {
+      "candidate_id": "9af30fc8cb62",
+      "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Vector packing heuristic: minimize bottleneck slack and residual imbalance.\"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Tightly pack the critical dimension while penalizing stranded asymmetric capacity\n    tightest_rem = min(rem_cpu, rem_mem)\n    sum_rem = rem_cpu + rem_mem\n    imbalance = abs(rem_cpu - rem_mem)\n\n    # Weighted combination: primary driver is tightest residual, followed by sum and balance\n    return -(tightest_rem * 3.0 + sum_rem * 1.0 + imbalance * 0.5)\n",
+      "from_slot": 0,
+      "dev": {
+        "total_machines": 772,
+        "mean_machines": 64.33333333333333,
+        "family_means": {
+          "balanced": 33.0,
+          "cpu_heavy": 89.0,
+          "mem_heavy": 90.33333333333333,
+          "mixed": 45.0
+        }
+      },
+      "completed_slots": 20
+    },
+    "2:evolution": {
+      "candidate_id": "b053754db7b8",
+      "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n    \n    # Minimize total leftover capacity, while prioritizing filling the tighter bottleneck\n    # and penalizing dimensional imbalance between leftover CPU and memory.\n    imbalance = abs(rem_cpu - rem_mem)\n    tightest = min(rem_cpu, rem_mem)\n    total_rem = rem_cpu + rem_mem\n    \n    # Lower leftover and lower imbalance yield higher score\n    return -(total_rem + 2.0 * tightest + 0.5 * imbalance)\n",
+      "from_slot": 2,
+      "dev": {
+        "total_machines": 772,
+        "mean_machines": 64.33333333333333,
+        "family_means": {
+          "balanced": 33.0,
+          "cpu_heavy": 89.0,
+          "mem_heavy": 90.33333333333333,
+          "mixed": 45.0
+        }
+      },
+      "completed_slots": 20
+    }
+  }
+}

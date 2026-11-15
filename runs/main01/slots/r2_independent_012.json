@@ -1,0 +1,145 @@
+{
+  "replicate": 2,
+  "condition": "independent",
+  "slot": 12,
+  "global_index": 104,
+  "completed_at": "2026-11-15T01:10:35+00:00",
+  "synthetic": false,
+  "parent_candidate_id": "4d1accf86e47",
+  "prompt": "You are improving a heuristic for online two-dimensional bin packing (a simplified machine-placement problem).\n\nTask rules (enforced by a trusted evaluator you cannot change):\n- Every machine has CPU capacity 1000 and memory capacity 1000 (integer units).\n- Jobs arrive one at a time in a fixed order and never leave. Each job has integer job_cpu and job_mem demands.\n- For each job, the evaluator calls your function once for every EXISTING machine that can fit the job, passing that machine's current free_cpu and free_mem (before placement).\n- The job goes to the machine with the highest score; ties go to the earliest-created machine.\n- If no existing machine fits, a new machine is opened without calling your function.\n\nObjective: minimize the mean number of machines used across the development workloads (lower is better).\nWorkload families: balanced (similar CPU and memory demand), cpu_heavy, mem_heavy, and mixed (each job drawn from one of the other three families).\n\nProgram constraints (programs that violate them are rejected and still count as an attempt):\n- Define exactly one function: def score(job_cpu, job_mem, free_cpu, free_mem):\n- Return a finite int or float (not a bool).\n- Allowed: arithmetic (+ - * / // % **), comparisons, and/or/not, if statements, conditional expressions, simple local variable assignments, return statements, and calls to abs, min and max.\n- Exponents must be numeric literals with magnitude at most 4. Numeric literals must have magnitude at most 1e+06.\n- Not allowed: imports, attribute access, indexing, loops, comprehensions, nested functions, lambdas, global/nonlocal, decorators, strings other than a docstring, or calls to anything except abs/min/max.\n- Keep the source under 2000 characters.\n\n### CURRENT PROGRAM BEGIN\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"Best fit: prefer the machine with the least total residual capacity after placement.\"\"\"\n    return -((free_cpu - job_cpu) + (free_mem - job_mem)) / 1000\n```\n### CURRENT PROGRAM END\n\nEvaluation feedback for the current program:\nStatus: valid.\nMean machines used (all development instances): 64.417\nMean machines used per family:\n  balanced: 33.000\n  cpu_heavy: 89.333\n  mem_heavy: 90.333\n  mixed: 45.000\n\nPropose one improved version of the score function that you expect to use fewer machines.\nFirst, write a short analysis (up to about 250 words): using the feedback above, explain why the current program wastes machines, especially on the families with the most machines, and what placement behaviour would reduce that.\nThen give exactly one ```python code block containing the complete improved function.\n",
+  "response": {
+    "ok": true,
+    "fatal": false,
+    "text": "### Analysis\n\nThe current baseline implements a simple sum-residual Best Fit heuristic ($-\\text{rem\\_cpu} - \\text{rem\\_mem}$). While this performs reasonably on balanced workloads (33 machines), it performs poorly on `cpu_heavy` (89.33) and `mem_heavy` (90.33) workloads, and leaves substantial room for improvement on `mixed` (45.00).\n\nThe primary flaw of linear sum-residual fit is that it treats CPU and memory residuals symmetrically and independently of the machine's aspect ratio. In `cpu_heavy` (or `mem_heavy`) workloads, the bottleneck resource is exhausted much faster than the other. When placing an item into a bin, minimizing the sum of remaining capacities can leave the bin with an unusable sliver of the non-bottleneck resource or cause fragmentation across multiple bins. Furthermore, in `mixed` workloads, complementary jobs (e.g., pairing a CPU-heavy job with a memory-heavy job) should be actively matched so that both dimensions fill concurrently, keeping remaining capacities well-balanced (`rem_cpu` close to `rem_mem`).\n\nTo improve packing efficiency:\n1. **Bottleneck / L1-norm residual minimization**: Strongly reward bins that minimize the residual bottleneck dimension or minimize $\\max(\\text{rem\\_cpu}, \\text{rem\\_mem})$.\n2. **Dimension alignment / balance penalty**: Penalize imbalance between remaining CPU and memory ($|\\text{rem\\_cpu} - \\text{rem\\_mem}|$) so complementary jobs pack together.\n3. **Fill factor / tight-fit bonus**: Reward bins that are already heavily utilized, driving them toward full closure rather than spreading jobs across partially filled bins.\n\nCombining residual capacity minimization with an alignment bonus directly addresses the extreme waste in skewed and mixed instances.\n\n***\n\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Multi-dimensional best fit with alignment and bottleneck minimization.\n    Favors tightly packed bins and matching complementary resource demands.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Minimize remaining capacity, especially the larger leftover dimension\n    max_rem = max(rem_cpu, rem_mem)\n    sum_rem = rem_cpu + rem_mem\n\n    # Penalize remaining imbalance to encourage pairing complementary jobs\n    imbalance = abs(rem_cpu - rem_mem)\n\n    # Heavily incentivize nearly full bins (exact/tight fits on either dimension)\n    tight_bonus = 0\n    if rem_cpu == 0 or rem_mem == 0:\n        tight_bonus = 500\n\n    # Score: higher is better\n    return tight_bonus - 2.0 * max_rem - 1.0 * sum_rem - 0.5 * imbalance\n```",
+    "attempts": [
+      {
+        "attempt": 1,
+        "status": "ok",
+        "started_at": 1794705028.265068,
+        "latency_s": 6.9017332079820335,
+        "http_code": 200,
+        "error_type": null,
+        "error_message": null,
+        "usage": {
+          "prompt_token_count": 658,
+          "candidates_token_count": 627,
+          "thoughts_token_count": null,
+          "cached_content_token_count": null,
+          "tool_use_prompt_token_count": null,
+          "total_token_count": 1285
+        }
+      }
+    ],
+    "finish_reason": "FinishReason.STOP",
+    "model_version": "gemini-3.8-flash",
+    "response_id": "hAb5ap_yFbzi_uMP2POCOA",
+    "synthetic": false,
+    "non_text_parts": null
+  },
+  "request_status": "ok",
+  "candidate": {
+    "raw_response": "### Analysis\n\nThe current baseline implements a simple sum-residual Best Fit heuristic ($-\\text{rem\\_cpu} - \\text{rem\\_mem}$). While this performs reasonably on balanced workloads (33 machines), it performs poorly on `cpu_heavy` (89.33) and `mem_heavy` (90.33) workloads, and leaves substantial room for improvement on `mixed` (45.00).\n\nThe primary flaw of linear sum-residual fit is that it treats CPU and memory residuals symmetrically and independently of the machine's aspect ratio. In `cpu_heavy` (or `mem_heavy`) workloads, the bottleneck resource is exhausted much faster than the other. When placing an item into a bin, minimizing the sum of remaining capacities can leave the bin with an unusable sliver of the non-bottleneck resource or cause fragmentation across multiple bins. Furthermore, in `mixed` workloads, complementary jobs (e.g., pairing a CPU-heavy job with a memory-heavy job) should be actively matched so that both dimensions fill concurrently, keeping remaining capacities well-balanced (`rem_cpu` close to `rem_mem`).\n\nTo improve packing efficiency:\n1. **Bottleneck / L1-norm residual minimization**: Strongly reward bins that minimize the residual bottleneck dimension or minimize $\\max(\\text{rem\\_cpu}, \\text{rem\\_mem})$.\n2. **Dimension alignment / balance penalty**: Penalize imbalance between remaining CPU and memory ($|\\text{rem\\_cpu} - \\text{rem\\_mem}|$) so complementary jobs pack together.\n3. **Fill factor / tight-fit bonus**: Reward bins that are already heavily utilized, driving them toward full closure rather than spreading jobs across partially filled bins.\n\nCombining residual capacity minimization with an alignment bonus directly addresses the extreme waste in skewed and mixed instances.\n\n***\n\n```python\ndef score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Multi-dimensional best fit with alignment and bottleneck minimization.\n    Favors tightly packed bins and matching complementary resource demands.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Minimize remaining capacity, especially the larger leftover dimension\n    max_rem = max(rem_cpu, rem_mem)\n    sum_rem = rem_cpu + rem_mem\n\n    # Penalize remaining imbalance to encourage pairing complementary jobs\n    imbalance = abs(rem_cpu - rem_mem)\n\n    # Heavily incentivize nearly full bins (exact/tight fits on either dimension)\n    tight_bonus = 0\n    if rem_cpu == 0 or rem_mem == 0:\n        tight_bonus = 500\n\n    # Score: higher is better\n    return tight_bonus - 2.0 * max_rem - 1.0 * sum_rem - 0.5 * imbalance\n```",
+    "source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Multi-dimensional best fit with alignment and bottleneck minimization.\n    Favors tightly packed bins and matching complementary resource demands.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n\n    # Minimize remaining capacity, especially the larger leftover dimension\n    max_rem = max(rem_cpu, rem_mem)\n    sum_rem = rem_cpu + rem_mem\n\n    # Penalize remaining imbalance to encourage pairing complementary jobs\n    imbalance = abs(rem_cpu - rem_mem)\n\n    # Heavily incentivize nearly full bins (exact/tight fits on either dimension)\n    tight_bonus = 0\n    if rem_cpu == 0 or rem_mem == 0:\n        tight_bonus = 500\n\n    # Score: higher is better\n    return tight_bonus - 2.0 * max_rem - 1.0 * sum_rem - 0.5 * imbalance\n",
+    "extraction_error": null
+  },
+  "eval": {
+    "per_instance": {
+      "dev-balanced-000": {
+        "machines_used": 32,
+        "residual_cpu": 3019,
+        "residual_mem": 3014,
+        "lower_bound": 29
+      },
+      "dev-balanced-001": {
+        "machines_used": 34,
+        "residual_cpu": 3289,
+        "residual_mem": 3475,
+        "lower_bound": 31
+      },
+      "dev-balanced-002": {
+        "machines_used": 34,
+        "residual_cpu": 3259,
+        "residual_mem": 3308,
+        "lower_bound": 31
+      },
+      "dev-cpu_heavy-000": {
+        "machines_used": 94,
+        "residual_cpu": 26630,
+        "residual_mem": 78631,
+        "lower_bound": 68
+      },
+      "dev-cpu_heavy-001": {
+        "machines_used": 84,
+        "residual_cpu": 22931,
+        "residual_mem": 68420,
+        "lower_bound": 62
+      },
+      "dev-cpu_heavy-002": {
+        "machines_used": 91,
+        "residual_cpu": 25780,
+        "residual_mem": 76416,
+        "lower_bound": 66
+      },
+      "dev-mem_heavy-000": {
+        "machines_used": 93,
+        "residual_cpu": 77156,
+        "residual_mem": 26371,
+        "lower_bound": 67
+      },
+      "dev-mem_heavy-001": {
+        "machines_used": 89,
+        "residual_cpu": 73824,
+        "residual_mem": 23750,
+        "lower_bound": 66
+      },
+      "dev-mem_heavy-002": {
+        "machines_used": 89,
+        "residual_cpu": 74244,
+        "residual_mem": 24386,
+        "lower_bound": 65
+      },
+      "dev-mixed-000": {
+        "machines_used": 45,
+        "residual_cpu": 5000,
+        "residual_mem": 10884,
+        "lower_bound": 40
+      },
+      "dev-mixed-001": {
+        "machines_used": 42,
+        "residual_cpu": 9540,
+        "residual_mem": 6060,
+        "lower_bound": 36
+      },
+      "dev-mixed-002": {
+        "machines_used": 48,
+        "residual_cpu": 12641,
+        "residual_mem": 7312,
+        "lower_bound": 41
+      }
+    },
+    "total_machines": 775,
+    "mean_machines": 64.58333333333333,
+    "family_means": {
+      "balanced": 33.333333333333336,
+      "cpu_heavy": 89.66666666666667,
+      "mem_heavy": 90.33333333333333,
+      "mixed": 45.0
+    },
+    "valid": true,
+    "candidate_id": "850ddc1a382f",
+    "normalized_source": "def score(job_cpu, job_mem, free_cpu, free_mem):\n    \"\"\"\n    Multi-dimensional best fit with alignment and bottleneck minimization.\n    Favors tightly packed bins and matching complementary resource demands.\n    \"\"\"\n    rem_cpu = free_cpu - job_cpu\n    rem_mem = free_mem - job_mem\n    max_rem = max(rem_cpu, rem_mem)\n    sum_rem = rem_cpu + rem_mem\n    imbalance = abs(rem_cpu - rem_mem)\n    tight_bonus = 0\n    if rem_cpu == 0 or rem_mem == 0:\n        tight_bonus = 500\n    return tight_bonus - 2.0 * max_rem - 1.0 * sum_rem - 0.5 * imbalance\n",
+    "eval_seconds": 0.37,
+    "runner": "container"
+  },
+  "improved": false,
+  "incumbent_before": {
+    "candidate_id": "9af30fc8cb62",
+    "total_machines": 772
+  },
+  "incumbent_after": {
+    "candidate_id": "9af30fc8cb62",
+    "total_machines": 772,
+    "mean_machines": 64.33333333333333,
+    "from_slot": 0
+  }
+}
